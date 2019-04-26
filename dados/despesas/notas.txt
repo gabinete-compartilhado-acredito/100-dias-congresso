@@ -1,0 +1,13 @@
+Daiana da COGEP falou que parlamentares tme até 90 dias para pedir reembolso (e é quase tudo por reembolso).
+Depois de fazer o reembolso, a COGEP passa os dados para os Dados Abertos em 4 ou 5 dias.
+
+Para as passagens aéreas, o esquema é diferente. Aparentemente o parlamentar voa sem pagar pela companhia,
+e depois a companhia manda a fatura para a Câmara. Aparentemente esse é o esquema mais demorado, haja
+visto que os dados mais antigos são, em geral, atualizados por inclusões de emissão de passagens aéreas.
+
+Parece que para telefonia, existem duas modalidades: ou a câmara cobra o valor da cota parlamentar
+(quando o telefone gasto é da câmara) ou reembolsa o telefone próprio do deputado. Para correios, a câmara
+também abate da cota.
+
+O abatimento da cota pode ser parcelado, caso o parlamentar não tenha saldo naquele mês.
+

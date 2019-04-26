@@ -1,0 +1,4 @@
+graficos
+old
+*.pyc
+.ipynb_checkpoints
