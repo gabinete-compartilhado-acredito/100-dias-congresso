@@ -7,7 +7,7 @@
 \usepackage{natbib}                              % \citep{jon90} --> (Jones et al., 1990)
 \usepackage[colorlinks,citecolor=blue]{hyperref} % Para colocar links nas referências, equações, figuras, etc, além de menu árvore no PDF.
 \usepackage{verbatim}                            % Para poder comentar regiões do arquivo .tex 
-\usepackage[small,bf]{caption}                   % Para que legendas de figuras e tabelas fique em fonte menor e com negrito.
+\usepackage[footnotesize,bf]{caption}                   % Para que legendas de figuras e tabelas fique em fonte menor e com negrito.
 \usepackage{amssymb}                             % Para poder utilizar alguns símbolos matemáticos especiais.
 \usepackage{amsmath}                             % Para poder usar o comando 'cases', e possivelmente outros.
 \usepackage{fancyhdr}                            % Para poder fazer cabeçalhos e rodapés mais bonitos.
@@ -17,6 +17,10 @@
 \usepackage[svgnames]{xcolor}                    % Várias cores (+150)                         
 \usepackage{helvet}                              % Fonte helvética
 \usepackage{lipsum}                              % Para preencher com texto. 
+\usepackage{booktabs}                            % Para usar toprule, etc. que vem das tabelas do pandas.
+\usepackage{longtable}                           % Para quebrar tabelas
+\usepackage{float}                               % Para poder usar figure placement H.
+\usepackage{authblk}
 
 
 %%% Formatting %%%
@@ -35,12 +39,13 @@
 \fancyhead[L]{\fontsize{10}{12}\sffamily\secColor\rightmark}
 \rhead{\includegraphics[width=3cm]{acredito_fundobranco.png}}
 % My commands %
-\newcommand{\myurl}[1]{{\tiny\url{#1}}}
-
+\newcommand{\tinyurl}[1]{{\tiny\url{#1}}}
+\newcommand{\footurl}[1]{{\scriptsize\url{#1}}}
+\newcommand{\HX}[1]{{\centering\color{red}\large<#1>}}
 
 \author{Henrique S. Xavier \& João Carabetta}
-\title{\Huge\sffamily\bfseries 100 dias de congresso}
-
+\title{\secColor\Huge\sffamily\bfseries 100 dias de congresso\\\texttt{<em dados>}}
+\affil{Gabinete compartilhado\\Movimento Acredito no Congresso Nacional}
 
 
 %%%%%%%%%%%%%%%% REPORT %%%%%%%%%%%%%%%%%%
@@ -53,6 +58,10 @@
 %\tableofcontents
 \pagebreak
 
+\thispagestyle{empty}
+\tableofcontents
+\pagebreak
+
 % Relatório mesmo:
 \thispagestyle{plain}
 \pagenumbering{arabic}
@@ -62,8 +71,8 @@
 \label{sec:intro}
 
 Este trabalho visa apresentar um panorama do congresso nacional brasileiro nos 100 primeiros dias da $56^{\mathrm{\underline{a}}}$ legislatura, que
-se iniciou no dia 1 de fevereiro de 2019, utilizando as bases de dados abertos da câmara\footnote{\myurl{http://dadosabertos.camara.leg.br/}}
-e do senado\footnote{\myurl{http://www12.senado.leg.br/dados-abertos}}. Além de apresentar o cenário atual, também buscamos analisar
+se iniciou no dia 1 de fevereiro de 2019, utilizando as bases de dados abertos da câmara\footnote{\footurl{http://dadosabertos.camara.leg.br/}}
+e do senado\footnote{\footurl{http://www12.senado.leg.br/dados-abertos}}. Além de apresentar o cenário atual, também buscamos analisar
 as características históricas do congresso, tanto para fins de comparação quanto de construção de um retrato de suas características
 mais estruturais. Os objetivos deste relatório são dois: de servir de subsídio para a atividade parlamentar do movimento Acredito na
 câmara e no senado, e de prover à sociedade mais informações relativas ao trabalho de seus representantes e das estruturas governamentais
@@ -81,17 +90,220 @@ Em relação aos parlamentares, buscamos investigar:
 (\emph{iv}) e o nível de participação e engajamento.
 Em relação às proposições, analisamos quais temas são os mais recorrentes historicamente e na atual legislatura.
 
+
+\subsection{Dados faltantes}
+
 Um de nossos primeiros achados se refere à limitação das bases de dados, particularmente em relação
 aos dados mais recentes. Por exemplo, os parlamentares tem um prazo de 90 dias para solicitar reembolso
-à cota parlamentar\footnote{\myurl{https://www2.camara.leg.br/comunicacao/assessoria-de-imprensa/cota-parlamentar}}
+à cota parlamentar\footnote{\footurl{https://www2.camara.leg.br/comunicacao/assessoria-de-imprensa/cota-parlamentar}}
 e empresas aéreas chegam a demorar mais do que isso para comunicar à câmara a emissão de
 bilhetes, o que torna incompleta a amostra de gastos dos últimos 100 dias. Nesses casos, optamos por apenas
 realizar uma análise histórica.
 
+\HX{Incluir tabela com dados disponíveis e não disponíveis em 2019}
+\HX{Incluit tabela com análises com câmara e senado}
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Parlamentares}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Análise das votações}
+
+\subsubsection{Apoio ao governo}
+
+Podemos estimar o apoio ao governo através da correlação entre os votos dos parlamentares e a orientação de voto
+dada pelo governo. Para fins de comparação, realizamos esse estudo para os 100 primeiros dias da presente legislatura
+e das legislaturas anteriores, desde 1999. Votações nas quais não existia orientação do governo foram ignoradas.
+
+A Fig. \ref{fig:apoio-governo-deputados} mostra a distribuição de deputados e deputadas em função do grau de
+alinhamento com a orientação do governo, nos 100 primeiros dias de legislatura, desde 1999 até hoje.
+Na maioria dos casos, é possível notar um grupo significativo de deputados que vota 90\% das vezes ou mais em acordo com o governo.
+No caso de 1999 (início do segundo mandato de Fernando Henrique Cardoso), mais da metade dos deputados votaram
+com o governo 100\% das vezes, levando a mediana a esse valor. No início do segundo mandato de Dilma Rousseff,
+esse grupo se dilui e o alinhamento dos deputados se torna bastante disperso.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_deputados_2019-05-03.pdf}
+\caption{Contagem do número de deputados em função da fração de seus votos no plenário que se
+  alinham com a orientação do governo. Cada painel apresenta os dados dos 100 primeiros dias de
+  cada legislatura, discriminadas pelo presidente no período. A linha vertical tracejada preta
+  separa a metade dos deputados com maior e menor apoio e as linhas coloridas indicam a posição
+  dos parlamentares do Acredito.}
+\label{fig:apoio-governo-deputados}
+\end{figure} 
+
+Na maioria das legislaturas, a distribuição bimodal indica uma separação clara dos deputados
+entre governo e oposição, sendo esta última contrária ao governo em mais de 2/3 das vezes.
+Esse padrão se altera no primeiro mandato de Luiz Inácio Lula da Silva e no segundo mandato de Dilma.
+
+A Fig. \ref{fig:apoio-governo-deputados} ainda indica que o governo de Jair Messias Bolsonaro detém
+razoável apoio dos deputados, com distribuição similar à de governos anteriores. Esse dado contrasta
+com a impressão derivada da cobertura da mídia, conforme mostra as manchetes da Fig. \ref{fig:manchetes-apoio}.
+Uma hipótese para explicar essa aparente discrepância é que as manchetes em geral comentam sobre
+a falta de articulação política no contexto da reforma da previdência, uma votação mais polêmica e
+que exige um apoio maior (por se tratar de uma mudança na constituição). Outras hipóteses seriam
+que a agenda de votações não está sendo comandada pelo governo ou que a orientação do governo esteja
+seguindo os votos dos deputados ao invés de liderá-los.
+
+\begin{figure}[H]
+  \centering
+  %\fbox{
+    %\begin{minipage}{\textwidth}
+      \fbox{\includegraphics[width=1.0\textwidth]{manchetes/estadao-bolsonaro-menor-base.png}}
+      \fbox{\includegraphics[width=1.0\textwidth]{manchetes/nexo-desarticulacao.png}}
+      \fbox{\includegraphics[width=1.0\textwidth]{manchetes/forum-PSL-ameaca-rebeliao.png}}
+    %\end{minipage}
+    %}
+\caption[Exemplos de manchetes mencionando dificuldades do governo com o congresso, extraídas dos jornais
+  O Estado de São Paulo e Nexo, e da Revista Fórum.]{Exemplos de manchetes mencionando dificuldades do governo com o congresso, extraídas dos jornais
+  O Estado de São Paulo e Nexo, e da Revista Fórum.\footnotemark}
+\label{fig:manchetes-apoio}
+\end{figure}
+\footnotetext{\\\tinyurl{http://politica.estadao.com.br/noticias/geral,com-bolsonaro-governo-tem-menor-base-de-apoio-no-congresso-desde-collor,70002706224}\\
+  \tinyurl{http://www.nexojornal.com.br/expresso/2019/04/05/A-desarticula\%C3\%A7\%C3\%A3o-do-governo-no-Congresso.-E-a-tentativa-de-rea\%C3\%A7\%C3\%A3o}\\
+  \tinyurl{https://www.revistaforum.com.br/parlamentares-do-psl-ameacam-rebeliao-contra-o-governo-jair-bolsonaro}}
+
+Também analisamos o apoio ao governo por votação. A Fig. \ref{fig:apoio-governo-votacao} mostra o resultado
+desse levantamento para os 100 primeiros dias das legislaturas desde 1999. Vemos que o segundo mandato
+de Fernando Henrique obteve maioria absoluta (257 votos) em todas as votações dos 100 primeiros dias; já
+o segundo mandato de Dilma é o único que não conseguiu que a média do número de votos por votação
+superasse 257. Foi também nesse governo em que se registrou o maior número de votações em 100 dias.
+O atual governo apresentou características típicas dos governos anteriores, com apoio médio
+acima da maioria absoluta e um número mais baixo de votações.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_por_votacao_2019-05-03.pdf}
+\caption{Número de votos seguindo a orientação do governo, em cada votação dos 100 primeiros
+  dias de congresso (em vermelho). Cada painel apresenta uma legislatura diferente, que teve
+  um número diferente de votações nos 100 primeiros dias. A linha tracejada azul indica a média
+  do número de votos obtidos em cada votação, e a linha contínua preta representa o mínimo de
+  votos para se obter maioria absoluta (metade do total de deputados mais um).}
+\label{fig:apoio-governo-votacao}
+\end{figure} 
+
+O alinhamento com o governo atual também foi estimado por partido. Nesse caso, os
+partidos foram classificados de acordo com a sistematicidade com a qual seguiram
+a orientação dos governos desde 1999. Aqueles que apresentaram uma taxa de apoio
+superior a 80\% em todos os governos nos quais possuíam representantes na câmara
+(com exceção do segundo mandato de Dilma, que perdeu apoio de maneira generalizada) foram
+denomidados ``governativos''. Partidos sem presença nas legislaturas anteriores à $55^{\mathrm{\underline{a}}}$ (e.g. PROS),
+foram classificados como ``indefinido''. 
+
+A Fig. \ref{fig:apoio-governo-partido} mostra que o apoio ao governo atravessa múltiplos partidos e que,
+dentre aqueles com mais de 80\% de votos, cerca de 40\% foram classificados como governativos. Nessa classificação
+é importante ressalvar que alguns partidos tiveram sua composição e tamanho significativamente alterados ao longo
+do tempo (e.g. PSL), de forma que seu comportamento no passado pode não ter relação com seu
+comportamento atual. Do conjunto de partidos mais próximos ao governo, talvez seja mais interessante ressaltar aqueles
+não classificados como governativos e que estiveram presentes em legislaturas anteriores: DEM, Cidadania (ex-PPS) e PSDB.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_partidos+tamanho_2019-05-03.pdf}
+\caption{Fração de votos dos deputados que foram alinhados com a orientação do governo atual (painel esquerdo), e
+  número de deputados de acordo com a última filiação, dentro de cada partido. O conjunto de votos dos dois
+  parlamentares do Acredito aparece em verde.}
+\label{fig:apoio-governo-partido}
+\end{figure} 
+
+Vemos na Fig. \ref{fig:apoio-governo-partido} que o grau de alinhamento com o governo varia de maneira
+mais ou menos suave para a maioria dos partidos. Exceção a esse comportamento se dá com o PT, PSOL e
+PCdoB, que formam uma oposição mais demarcada. A Fig. \ref{fig:apoio-governo-partido-G} apresenta os
+mesmos dados mas apenas para os partidos com 20 deputados ou mais.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_partidosG+tamanho_2019-05-03.pdf}
+\caption{Igual à Fig. \ref{fig:apoio-governo-partido}, mas para partidos com 20 deputados ou mais.}
+\label{fig:apoio-governo-partido-G}
+\end{figure} 
+
+\subsubsection{Fidelidade partidária}
+
+Para estimar a fidelidade partidária, verificamos a fração de votos dos deputados que seguem
+a orientação do próprio partido. Novamente, votações nas quais não houve orientação foram
+ignoradas. É importante ressaltar que alguns partidos orientaram poucas vezes e/ou são compostos
+por poucos parlamentares, o que resulta em amostras pequenas e com pouca representatividade estatística.
+A Tabela \ref{tab:alinha-dep} mostra o número de orientações recebidas por cada deputado.
+
+A Fig. \ref{fig:fid-poder-partido} mostra que, tanto atual quanto historicamente, a maioria dos partidos
+apresentam alta fidelidade, com mais de 80\% dos votos de seus deputados alinhados à sua orientação.
+Para a maioria dos partidos, também observamos um ligeiro aumento do grau de fidelidade na legislatura atual.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.49\textwidth]{graficos/fidelidade_partidaria_media_2019-05-03.pdf}
+\includegraphics[width=0.49\textwidth]{graficos/poder_partidario_2019-05-03.pdf}
+\caption{O painel esquerdo mostra a fração dos votos dos deputados que seguem orientação do próprio partido, e
+  o painel direito mostra o número médio de votos que seguem a orientação do próprio partido.
+  As barras azuis e largas são para a atual legislatura, e as cinzas e estreitas são para o período
+  histórico de 2011 a 2019.
+}
+\label{fig:fid-poder-partido}
+\end{figure} 
+
+O painel direito dessa figura apresenta o grau de fidelidade (painel esquerdo) multiplicado pelo tamanho da bancada
+(ou tamanho médio, no caso do período histórico), o que dá o número de votos que o partido consegue
+obter dada uma certa orientação. Uma vez que a fidelidade partidária não varia muito entre os partidos,
+aqueles com as maiores bancadas (e.g. PT e PSL em 2019, MDB na série histórica) são também os que podem
+orientar a maior quantidade de votos. Aqui destacamos que partidos outrora numerosos na câmara perderam
+muitos assentos na legislatura atual (PT, PSDB, MDB e DEM), enquanto outros partidos, como o PSL e PRB,
+tiveram crescimento significativo. De maneira geral, observamos na atualidade uma distribuição das
+cadeiras entre um número maior de partidos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/fidelidade_partidaria_deputados_2019-05-03.pdf}
+\caption{Histogramas da fração de votos dos deputados que são alinhados com o próprio partido, um para
+  cada 100 primeiros dias de legislatura. A linha vertical preta indica a mediana e as linhas
+  coloridas, o alinhamento dos parlamentares do Acredito com seus respectivos partidos.}
+\label{fig:fid-poder-deputado}
+\end{figure} 
+
+Por fim, a Fig. \ref{fig:fid-poder-deputado} mostra a distribuição dos deputados de várias legislaturas
+em termos de fidelidade partidária. De maneira geral, ela é altamente concentrada em altos valores. Vemos
+que a situação atual não difere muito do comportamento histórico e que, nos 100 primeiros dias da legislatura
+anterior (segundo mandato de Dilma), a fidelidade partidária apresentou uma queda. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Distribuição de cargos e poder}
+
+A proposta desta seção é verificar como os cargos em comissões e lideranças de blocos e partidos,
+de maneira conjunta, são distribuídos entre os deputados. Aqui, infelizmente, temos dificuldades com a base de dados
+abertos da câmara: parlamentares cuja participação em comissões é conhecida ou listada no portal
+da câmara não aparecem como participantes dos órgãos. Os casos da deputada Tabata
+Amaral\footnote{\footurl{http://www.camara.leg.br/deputados/204534}\\
+  \footurl{https://dadosabertos.camara.leg.br/api/v2/deputados/204534/orgaos?ordem=ASC\&ordenarPor=dataInicio}}
+(membro titular na Comissão de Educação) e do deputado
+Ted Conti\footnote{\footurl{http://www.camara.leg.br/deputados/206231}\\
+  \footurl{https://dadosabertos.camara.leg.br/api/v2/deputados/206231/orgaos?ordem=ASC\&ordenarPor=dataInicio}}
+(membro titular na Comissão de Ciência e Tecnologia, Comunicação e Informática) são exemplos desse
+problema. A Fig. \ref{fig:orgaos-por-ano} mostra que o ano de 2019 apresenta um registro atípico de número
+de vagas preenchidas para um início de legislatura, evidenciando o problema. Além disso, e figura mostra que dados anteriores a 1999 estão
+ausentes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{graficos/orgaos-ocupados-por-ano_2019-05-02.pdf}
+\caption{Número de vagas preenchidas por deputados no período de 1 de fevereiro a 18 de abril em órgãos (incluindo Mesa Diretora,
+  Grupos de Trabalho, Comissões Parlamentares de Inquérito, Comissões Permanentes, Especiais, Mistas e Externas,
+  Conselhos e Subcomissões, entre outros) ao longo dos anos, de acordo com a base de dados abertos da câmara dos deputados.}
+\label{fig:orgaos-por-ano}
+\end{figure} 
+
+Pelo motivo apresentado acima, apenas uma análise histórica da participação em comissões pode ser feita. Por outro lado,
+a base de dados abertos não guarda as informações sobre lideranças passadas dos blocos e partidos, de maneira
+que não é possível realizar uma análise histórica conjunta entre participação em comissões e lideranças.
+
+\HX{Incluir análise histórica da distribuição de cargos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Atividade parlamentar}
+
+\HX{Incluir seção sobre atividade parlamentar na câmara e no senado}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Uso da cota parlamentar}
@@ -103,7 +315,7 @@ na Fig. \ref{fig:n-despesas-por-mes}. A queda abrupta, a partir de 2018, no núm
 em parte consequência dessa defasagem no registro dos gastos. A Fig. \ref{fig:n-despesas-por-mes} ainda mostra que
 os gastos do total de deputados segue um padrão recorrente ao longo dos anos, com uma queda significativa em janeiro.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=1.0\textwidth]{graficos/n_despesas_por_mes_2019-04-29.pdf}
 \caption{Número de despesas na base de dados de uso da cota parlamentar dos deputados federais
@@ -118,7 +330,7 @@ resíduo (veja a Fig. \ref{fig:total-despesas-por-mes}). Através da curva de te
 o valor médio gasto praticamente não se alterou desde 2010, sendo que uma leve queda pode ser notada em anos
 recentes. Ressaltamos que ao menos parte dessa queda é consequência da defasagem de registro dos gastos.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=1.0\textwidth]{graficos/despesas-reais-e-sazonalidade_2019-04-29.pdf}
 \caption{Valor real (descontada a inflação) gasto com o exercício da atividade parlamentar em cada mês
@@ -147,7 +359,7 @@ Gastos com manutenção de escritório de apoio em seu estado, consultorias, tel
 em seguida. Junto com passagens aéreas, o transporte totaliza cerca de 44\% do total. Gastos com alimentação e
 hospedagem fora do distrito federal totalizam, em média, menos de 2\% dos gastos.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=1.0\textwidth]{graficos/total-despesas-por-tipo_2019-04-29.pdf}
 \caption{Porcentagem do valor total utilizado pelos deputados federais que é destinado a cada finalidade. Nesse
@@ -156,120 +368,11 @@ cálculo, utilizamos os valores de 2009 a 2017, corrigigos pela inflação.}
 \end{figure} 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Análise das votações}
 
-\subsubsection{Apoio ao governo}
-
-Podemos estimar o apoio ao governo através da correlação entre os votos dos parlamentares e a orientação de voto
-dada pelo governo. Para fins de comparação, realizamos esse estudo para os 100 primeiros dias da presente legislatura
-e das legislaturas anteriores, desde 1999. Votações nas quais não existia orientação do governo foram ignoradas.
-
-A Fig. \ref{fig:apoio-governo-deputados} mostra a distribuição de deputados e deputadas em função do grau de
-alinhamento com a orientação do governo, nos 100 primeiros dias de legislatura, desde 1999 até hoje.
-Na maioria dos casos, é possível notar um grupo significativo de deputados que vota 90\% das vezes ou mais em acordo com o governo.
-No caso de 1999 (início do segundo mandato de Fernando Henrique Cardoso), mais da metade dos deputados votaram
-com o governo 100\% das vezes, levando a mediana a esse valor. No início do segundo mandato de Dilma Rousseff,
-esse grupo se dilui e o alinhamento dos deputados se torna bastante disperso.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_deputados_2019-04-30.pdf}
-\caption{Contagem do número de deputados em função da fração de seus votos no plenário que se
-  alinham com a orientação do governo. Cada painel apresenta os dados dos 100 primeiros dias de
-  cada legislatura, discriminadas pelo presidente no período. A linha vertical tracejada preta
-  separa a metade dos deputados com maior e menor apoio e as linhas coloridas indicam a posição
-  dos parlamentares do Acredito.}
-\label{fig:apoio-governo-deputados}
-\end{figure} 
-
-Na maioria das legislaturas, a distribuição bimodal indica uma separação clara dos deputados
-entre governo e oposição, sendo esta última contrária ao governo em mais de 2/3 das vezes.
-Esse padrão se altera no primeiro mandato de Luiz Inácio Lula da Silva e no segundo mandato de Dilma.
-
-A Fig. \ref{fig:apoio-governo-deputados} ainda indica que o governo de Jair Messias Bolsonaro detém
-razoável apoio dos deputados, com distribuição similar à de governos anteriores. Esse dado contrasta
-com a impressão derivada da cobertura da mídia, conforme mostra as manchetes da Fig. \ref{fig:manchetes-apoio}.
-Uma hipótese para explicar essa aparente discrepância é que as manchetes em geral comentam sobre
-a falta de articulação política no contexto da reforma da previdência, uma votação mais polêmica e
-que exige um apoio maior (por se tratar de uma mudança na constituição). Outras hipóteses seriam
-que a agenda de votações não está sendo comandada pelo governo ou que a orientação do governo esteja
-seguindo os votos dos deputados ao invés de liderá-los.
-
-\begin{figure}[t]
-  \centering
-  %\fbox{
-    %\begin{minipage}{\textwidth}
-      \fbox{\includegraphics[width=1.0\textwidth]{manchetes/estadao-bolsonaro-menor-base.png}}
-      \fbox{\includegraphics[width=1.0\textwidth]{manchetes/nexo-desarticulacao.png}}
-      \fbox{\includegraphics[width=1.0\textwidth]{manchetes/forum-PSL-ameaca-rebeliao.png}}
-    %\end{minipage}
-    %}
-\caption[Exemplos de manchetes mencionando dificuldades do governo com o congresso, extraídas dos jornais
-  O Estado de São Paulo e Nexo, e da Revista Fórum.]{Exemplos de manchetes mencionando dificuldades do governo com o congresso, extraídas dos jornais
-  O Estado de São Paulo e Nexo, e da Revista Fórum.\footnotemark}
-\label{fig:manchetes-apoio}
-\end{figure}
-\footnotetext{\\\myurl{http://politica.estadao.com.br/noticias/geral,com-bolsonaro-governo-tem-menor-base-de-apoio-no-congresso-desde-collor,70002706224}\\
-  \myurl{http://www.nexojornal.com.br/expresso/2019/04/05/A-desarticula\%C3\%A7\%C3\%A3o-do-governo-no-Congresso.-E-a-tentativa-de-rea\%C3\%A7\%C3\%A3o}\\
-  \myurl{https://www.revistaforum.com.br/parlamentares-do-psl-ameacam-rebeliao-contra-o-governo-jair-bolsonaro}}
-
-Também analisamos o apoio ao governo por votação. A Fig. \ref{fig:apoio-governo-votacao} mostra o resultado
-desse levantamento para os 100 primeiros dias das legislaturas desde 1999. Vemos que o segundo mandato
-de Fernando Henrique obteve maioria absoluta em todas as votações dos 100 primeiros dias; já
-o segundo mandato de Dilma é o único que não conseguiu que a média do número de votos por votação
-superasse 257. Foi também nesse governo em que se registrou o maior número de votações em 100 dias.
-O atual governo apresentou características típicas dos governos anteriores, com apoio médio
-acima da maioria absoluta e um número mais baixo de votações.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_por_votacao_2019-04-30.pdf}
-\caption{Número de votos seguindo a orientação do governo, em cada votação dos 100 primeiros
-  dias de congresso (em vermelho). Cada painel apresenta uma legislatura diferente, que teve
-  um número diferente de votações nos 100 primeiros dias. A linha tracejada azul indica a média
-  do número de votos obtidos em cada votação, e a linha contínua preta representa o mínimo de
-  votos para se obter maioria absoluta (metade do total de deputados mais um).}
-\label{fig:apoio-governo-votacao}
-\end{figure} 
-
-O alinhamento com o governo atual também foi estimado por partido. Nesse caso, os
-partidos foram classificados de acordo com a sistematicidade com a qual seguiram
-a orientação dos governos desde 1999. Aqueles que apresentaram uma taxa de apoio
-superior a 2/3 em todos os governos nos quais possuíam representantes na câmara
-(com exceção do segundo mandato de Dilma, que perdeu apoio de maneira generalizada) foram
-denomidados ``governativos''. Partidos com presença apenas em uma legislatura, a atual (e.g. NOVO),
-não foram classificados como governativos. 
-
-A Fig. \ref{fig:apoio-governo-partido} mostra que o apoio ao governo atravessa múltiplos partidos e que,
-dentre aqueles com mais de 80\% de votos, a maioria foi classificada como governativa. Nessa classificação
-é importante ressalvar que alguns partidos tiveram sua composição e tamanho significativamente alterados ao longo
-do tempo (e.g. PSL), de forma que seu comportamento no passado pode não ter relação com seu
-comportamento atual. Do conjunto de partidos mais próximos ao governo, talvez seja mais interessante ressaltar aqueles
-não classificados como governativos e que estiveram presentes em legislaturas anteriores: DEM, Cidadania (ex-PPS) e PSDB.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.55\textwidth]{graficos/apoio_ao_governo_partidos_2019-04-30.pdf}
-\caption{Fração de votos dos deputados que foram alinhados com a orientação do governo atual, dentro de cada partido.
-  Partidos para os quais tal fração foi superior a 2/3 no governo atual e em todos os governos nos quais tiveram representantes
-  (desde 1999 e com exceção do segundo mandato de Dilma) foram denominados ``Governativos''. Partidos
-  sem presença em legislatura anteriores não receberam esse rótulo.
-  O conjunto de votos dos dois parlamentares do Acredito aparece em verde.}
-\label{fig:apoio-governo-partido}
-\end{figure} 
-
-Vemos na Fig. \ref{fig:apoio-governo-partido} que o grau de alinhamento com o governo varia de maneira
-mais ou menos suave para a maioria dos partidos. Exceção a esse comportamento se dá com o PT, PSOL e
-PCdoB, que formam uma oposição mais demarcada.
-
-\subsubsection{Fidelidade partidária}
-
-\subsection{Distribuição de cargos e poder}
-\subsection{Atividade parlamentar}
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Proposições}
+
+\subsection{Câmara dos deputados}
 
 A base de dados abertos da câmara federal indica que, nos 100 primeiros dias da atual legislatura,
 foram apresentados pouco mais de 1600 projetos de lei (PLs, veja a Fig. \ref{fig:prop-2019-tipo}),
@@ -277,7 +380,7 @@ o que resulta em, aproximadamente, 3,2 projetos por deputado. Dado que os PLs s�
 das proposições apresentadas na legislatura atual, vamos focar nossa análise nesse tipo de proposição e
 compará-las com os anos anteriores.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{graficos/proposicoes-2019-por-tipo_2019-05-01.pdf}
 \caption{Número de proposições apresentadas na $56^{\mathrm{\underline{a}}}$ (atual) legislatura,
@@ -292,36 +395,40 @@ A Fig. \ref{fig:prop-por-ano} mostra a evolução do número de PLs apresentados
 tomando como referência o mesmo período a cada ano. Além do crescimento observado, é interessante
 notar que os inícios de legislatura apresentam picos de apresentação de PLs.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.7\textwidth]{graficos/PLs-por-ano_2019-05-01.pdf}
+\begin{figure}[H]
+  \centering
+\includegraphics[width=0.7\textwidth]{graficos/PLs-por-ano_2019-05-03.pdf}
 \caption{Evolução do número de PLs apresentados nos 100 dias a partir de 1 de fevereiro, de cada ano.
 Os inícios de legislatura são marcados pelas linhas tracejadas cinzas.}
 \label{fig:prop-por-ano}
 \end{figure}
 
 O Centro de Documentação e Informação da Câmara fornece uma classificação oficial em temas para as
-proposições.\footnote{Conforme descrito em {\scriptsize\url{https://dadosabertos.camara.leg.br/swagger/api.html}}}
+proposições.\footnote{Conforme descrito em \footurl{https://dadosabertos.camara.leg.br/swagger/api.html}}
 Nós verificamos a frequência com que cada tema apareceu em cada ano, de maneira que podemos saber
 quais são os temas historicamente mais recorrentes nos projetos de lei e quais os temas mais em voga
-na legislatura atual. A Fig. \ref{fig:pl-por-tema} sintetiza os resultados, na qual comparamos
-a frequência de cada tema nos projetos de lei apresentados na atual legislatura com as médias das frequências
-em todo o período de janeiro de 2011 a dezembro de 2018. A escolha desse período como referência
+na legislatura atual. A Fig. \ref{fig:pl-por-tema-camara} sintetiza os resultados, na qual comparamos
+a frequência de cada tema nos projetos de lei apresentados nos 100 primeiros dias da atual legislatura com as médias das frequências
+em todo o período de janeiro de 2011 a dezembro de
+2018.\footnote{Uma versão simplificada desse gráfico é apresentada na Fig. \ref{fig:pl-por-tema-camara-simples}.}
+
+A escolha desse período como referência
 visa reduzir flutuações estatísticas (em comparação com intervalos menores de tempo) e evitar mudanças 
 de comportamento abruptas e não plenamente entendidas que parecem ter ocorrido na passagem de 2010 a 2011
-(conforme apresentamos abaixo).
+(conforme apresentamos abaixo). Além disso, verificamos não existir uma sazonalidade significativa
+que justifique restringir o cálculo da média histórica aos 100 primeiros dias das legislaturas anteriores.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
-\includegraphics[width=1.0\textwidth]{graficos/temas_PL_fracao2019-vs-mediaAnterior_2019-05-01.pdf}
-\caption{Frequência de cada tema (fração dos PLs apresentados que foram classificados naquele tema).
+\includegraphics[width=1.0\textwidth]{graficos/temas_PL_fracao2019-vs-mediaAnterior_2019-05-03.pdf}
+\caption{Frequência de cada tema (fração dos PLs apresentados que foram classificados naquele tema) na câmara.
   As barras cinzas e mais estreitas representam a média da frequência no período de janeiro de 2011 a
   dezembro de 2018, e as linhas pretas indicam a variação típica (desvio padrão) da frequência no período.
   As barras coloridas representam a frequência de cada tema para os 100 dias da atual legislatura.
   Frequências que cresceram mais que a variação típica dos anos anteriores estão em azul, e as que
   diminuíram mais que a variação típica estão em vermelho. As demais são apresentadas em amarelo.
   Os temas foram ordenados pela frequência atual.}
-\label{fig:pl-por-tema}
+\label{fig:pl-por-tema-camara}
 \end{figure}
 
 Podemos notar que certos temas são, historicamente, mais frequentes que outros. No período desde 2011,
@@ -349,7 +456,7 @@ Outros temas realizam transições semelhantes: direito e defesa do consumidor, 
 política, partidos e eleições também pulam de patamar em 2011; enquanto que viação, transporte e
 mobilidade cai. Esses saltos podem indicar uma mudança na metodologia de classificação dos PLs.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth]{graficos/PL-agricultura-por-ano_2019-05-01.pdf}
 \caption{Evolução da frequência de PLs que tratam dos temas ``Agricultura, Pecuária, Pesca e Extrativismo''
@@ -363,7 +470,7 @@ no período analisado (de 1999 a 2019), passou por um crescimento significativo 
 A Fig. \ref{fig:pl-direitos-humanos} mostra que, em 20 anos, esse tema dobrou de frequência, passando de
 5\% para cerca de 11\%.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{graficos/PL-direitos-humanos-por-ano_2019-05-01.pdf}
 \caption{O painel superior apresenta a evolução da frequência do tema ``direitos humanos e minorias''
@@ -372,6 +479,67 @@ A Fig. \ref{fig:pl-direitos-humanos} mostra que, em 20 anos, esse tema dobrou de
   a diferença entre os valores observados e ajustados. As barras de erro foram estimadas assumindo
   flutuações de Poisson nas contagens de PLs.}
 \label{fig:pl-direitos-humanos}
+\end{figure}
+
+\subsection{Senado}
+
+A base de dados abertos do senado também classifica as proposições por temas, apesar dos temas serem
+ligeiramente diferentes. A Fig. \ref{fig:pl-por-tema-senado} é análoga à Fig. \ref{fig:pl-por-tema-camara}, mas trata dos PLs apresentados
+no senado.\footnote{Uma versão simplificada desse gráfico é apresentada na Fig. \ref{fig:pl-por-tema-senado-simples}.}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/senado/pls-temas-senado-r-completo.pdf}
+\caption{Frequência de cada tema (fração dos PLs apresentados que foram classificados
+  naquele tema) no senado. A representação e a forma de calcular a média histórica são iguais
+  aos da Fig. \ref{fig:pl-por-tema-camara}.}
+\label{fig:pl-por-tema-senado}
+\end{figure}
+
+Aqui, vemos algumas semelhanças à configuração de temas da câmara: os temas mais comuns são
+próximos (direito penal e processual penal, direitos humanos e minorias e meio ambiente), e
+também contrastam com temas como turismo e ciência e tecnologia (com baixa frequência).
+As altas em 2019 dos temas ``meio ambiente'' e ``direitos humanos e minorias'' também aparecem,
+enquanto que a de ``direito penal e processual penal'', não. Também notamos a repetição dos
+padrões de queda nos temas ``trabalho e emprego'' e ``saúde''.
+A base de dados abertos do senado também classifica as proposições em macro-temas, e suas frequências
+históricas e em 2019 são apresentadas na Fig. \ref{fig:pl-por-macrotema-senado}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{graficos/senado/pls-macro-temas-senado-r-completo.pdf}
+\caption{Frequência de cada macro-tema (fração dos PLs apresentados que foram classificados
+  naquele macro-tema) no senado. A representação e a forma de calcular a média histórica são iguais
+  aos da Fig. \ref{fig:pl-por-tema-camara}.}
+\label{fig:pl-por-macrotema-senado}
+\end{figure}
+
+\HX{Incluir tabela com dados sobre temas}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Tabelas}
+{\footnotesize
+\input{tab-alinhamento-deputados.tex}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Figuras adicionais}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/temas_PL_fracao2019_2019-05-03.pdf}
+\caption{Versão simplificada da Fig. \ref{fig:pl-por-tema-camara}. Aqui apenas apresentamos a frequência com
+  que os temas apareceram na câmara nos 100 primeiros dias de 2019, sem comparar com o histórico.}
+\label{fig:pl-por-tema-camara-simples}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/senado/pls-temas-senado-r-simples.pdf}
+\caption{Versão simplificada da Fig. \ref{fig:pl-por-tema-senado}. Aqui apenas apresentamos a frequência com
+  que os temas apareceram no senado nos 100 primeiros dias de 2019, sem comparar com o histórico.}
+\label{fig:pl-por-tema-senado-simples}
 \end{figure}
 
 
