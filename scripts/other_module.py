@@ -29,7 +29,7 @@ def histogram(df, column, bins, x_lim, y_lim):
 
 def plot_deputado(df, acao):
     
-    pl.figure(figsize=(15, 5))
+    pl.figure(figsize=(10, 5))
     n_rows = 1
     n_cols = 2
 
@@ -37,41 +37,46 @@ def plot_deputado(df, acao):
 
     # Plot:    
     median = histogram(df, 'acoes', 'fd', 40, 100)
-    pl.axvline(median, linestyle='--', color='k')
+    pl.gca().tick_params(labelsize=14)
 
     # Labels
-    pl.xlabel(f'# de {acao}')
-    pl.ylabel('# de deputados´')
+    pl.xlabel(f'# de {acao}', fontsize=14)
+    pl.ylabel('# de deputados´', fontsize=14)
 
     # Coloca acredito:
+    pl.axvline(median, linestyle='--', color='k')
+    vertical_lines = [lines.Line2D([], [], color='k', linestyle='--', label='Mediana')]
+    
     with suppress(Exception):
         pl.axvline(df.loc[(df['nome_parlamentar'] == 'TABATA AMARAL')]['acoes'].values[0], color='purple')
+        vertical_lines.append(lines.Line2D([], [], color=colors.to_rgba('purple', alpha=None), linestyle='-',
+                                           label='Tabata'))
     with suppress(Exception):
         pl.axvline(df.loc[(df['nome_parlamentar'] == 'FELIPE RIGONI')]['acoes'].values[0], color='green')
+        vertical_lines.append(lines.Line2D([], [], color='green', linestyle='-', label='Felipe'))
 
 
-
-    # Legenda
-    import matplotlib.colors as colors 
-    vertical_lines = [lines.Line2D([], [], color='k', linestyle='--', label='Mediana'),
-    lines.Line2D([], [], color=colors.to_rgba('purple', alpha=None), linestyle='-', label='Tabata'),
-    lines.Line2D([], [], color='green', linestyle='-', label='Felipe')]
+    # Plota Legenda
     pl.legend(handles=vertical_lines, fontsize=14, loc='upper right')
 
-    # Acumulado
+    # Gráfico Acumulado #
     pl.subplot(n_rows, n_cols, 2)
 
-    # Plot
+    ## Plot
     data_cumsum = (df['acoes'].sort_values(ascending=False).cumsum()
                    .reset_index(drop=True).divide(sum(df['acoes']))
                    .multiply(100))
     pl.plot(data_cumsum.index, data_cumsum)
+    pl.gca().tick_params(labelsize=14)
+    pl.ylim([0, 100])
 
-    # Labels
-    pl.xlabel('# de deputados')
-    pl.ylabel(f'% do total de {acao}')
+    ## Labels
+    pl.xlabel('# de deputados', fontsize=14)
+    pl.ylabel(f'% do total de {acao}', fontsize=14)
 
-    pl.axvline(50, color='black', linestyle='--')
+    pl.axhline(50, color='black', linestyle='--')
+    vertical_lines = []
+    
     with suppress(Exception):
         print('Posicao Tabata', (df.sort_values('acoes', ascending=False)
                 .reset_index(drop=True).
@@ -80,6 +85,8 @@ def plot_deputado(df, acao):
                 .reset_index(drop=True)
                 .query("nome_parlamentar == 'TABATA AMARAL'").index.values[0]),
                color='purple')
+        vertical_lines.append(lines.Line2D([], [], color=colors.to_rgba('purple', alpha=None), linestyle='-', label='Tabata'))   
+    
     with suppress(Exception):
         print('Posicao Rigoni', (df.sort_values('acoes', ascending=False)
                 .reset_index(drop=True).
@@ -88,23 +95,25 @@ def plot_deputado(df, acao):
                 .reset_index(drop=True).
                 query("nome_parlamentar == 'FELIPE RIGONI'").index.values[0]),
                color='green')
+        vertical_lines.append(lines.Line2D([], [], color='green', linestyle='-', label='Felipe'))
 
-    # # Legenda
-    vertical_lines = [lines.Line2D([], [], color='k', linestyle='--', label=f'50 parlamentares'),
-    lines.Line2D([], [], color=colors.to_rgba('purple', alpha=None), linestyle='-', label='Tabata'),
-    lines.Line2D([], [], color='green', linestyle='-', label='Felipe')]
+    ## Legenda
     pl.legend(handles=vertical_lines, fontsize=14, loc='lower right')
-
-    pl.savefig(OUTPUT_PATH / f'plot_{acao}_deputados.png', bbox_inches='tight')
+     
+    ## Salva Figura e Arquivo
+    pl.savefig(OUTPUT_PATH / f'atividade/fig/plot_{acao}_deputados.png', bbox_inches='tight')
+    df.sort_values(by='acoes').to_csv(OUTPUT_PATH / f'atividade/data/{acao}_deputados.csv')
     
+    ## Plot
+    pl.tight_layout()
     pl.show()
     
-    df.sort_values(by='acoes').to_csv(OUTPUT_PATH / f'{acao}_deputados.csv')
+    
     
 
 def plot_partido(df, acao, partido_bancada):
     
-    pl.figure(figsize=(15, 10))
+    pl.figure(figsize=(10, 10))
     n_rows = 1
     n_cols = 2
 
@@ -117,7 +126,7 @@ def plot_partido(df, acao, partido_bancada):
           name='acoes').to_frame()])
     df_partidos = df_partidos.sort_values(by='acoes')
     pl.barh(df_partidos.index, df_partidos['acoes'])
-    pl.xlabel(f'# de {acao}')
+    pl.xlabel(f'# de {acao}', fontsize=14)
     
     pl.subplot(n_rows, n_cols, 2)
     
@@ -126,18 +135,23 @@ def plot_partido(df, acao, partido_bancada):
 
     pl.barh(df_partidos['sigla_partido'], 
             df_partidos['percapita'])
-    pl.xlabel(f'# de {acao}')
+    pl.xlabel(f'{acao} per capita', fontsize=14)
     pl.gca().tick_params(axis='x', labelsize=14)
+    pl.gca().tick_params(axis='y', labelleft=False)
     
-    pl.savefig(OUTPUT_PATH / f'plot_{acao}_partidos_percapita.png', bbox_inches='tight')
+    pl.savefig(OUTPUT_PATH / f'atividade/fig/plot_{acao}_partidos_percapita.png', bbox_inches='tight')
+    df_partidos.to_csv(OUTPUT_PATH / f'atividade/data/{acao}_partidos.csv')
     
+    pl.tight_layout()
     pl.show()
 
-    df_partidos.to_csv(OUTPUT_PATH / f'{acao}_partidos.csv')
     
-def query_data(atividades, acao):
+    
+def query_data(atividades, acao, tipo_atividade):
 
-    query = """
+    queries = {}
+    
+    queries['tramitacao'] = """
     SELECT 
     legislatura , nome_parlamentar, sigla_partido, count(*) as acoes
     FROM `gabinete-compartilhado.analise_congresso_atividade.tramitacao_por_parlamentar_` 
@@ -146,11 +160,25 @@ def query_data(atividades, acao):
     GROUP BY legislatura , nome_parlamentar, sigla_partido 
     """
     
-    return query_gcp(query.format(atividades[acao]))
+    queries['autores'] = """
+    SELECT 
+    56 as legislatura, UPPER(nome_autor) as nome_parlamentar, sigla_partido_autor as sigla_partido, count(*) as acoes
+    FROM `gabinete-compartilhado.congresso.camara_proposicoes_autores_` 
+    WHERE sigla_tipo = '{}'
+    AND data_apresentacao BETWEEN DATETIME('2019-02-01') AND DATETIME('2019-05-11')
+    AND sigla_partido_autor != ''
+    GROUP BY nome_autor, sigla_partido_autor
+    """
     
-def build_plots(atividades, acao='relatorias', partido_bancada=None):
+    return query_gcp(queries[tipo_atividade].format(atividades[acao]))
     
-    df = query_data(atividades, acao)
+def build_plots(atividades, 
+                acao='relatorias',
+                partido_bancada=None, 
+                tipo_atividade='tramitacao'
+               ):
+    
+    df = query_data(atividades, acao, tipo_atividade)
     
     print('-'*15)
     print(acao)
