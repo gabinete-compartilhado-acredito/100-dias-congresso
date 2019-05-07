@@ -100,12 +100,11 @@ def plot_deputado(df, acao):
     ## Legenda
     pl.legend(handles=vertical_lines, fontsize=14, loc='lower right')
      
-    ## Salva Figura e Arquivo
+    ## Plot e Salva Figura e Arquivo
+    pl.tight_layout()
+    
     pl.savefig(OUTPUT_PATH / f'atividade/fig/plot_{acao}_deputados.png', bbox_inches='tight')
     df.sort_values(by='acoes').to_csv(OUTPUT_PATH / f'atividade/data/{acao}_deputados.csv')
-    
-    ## Plot
-    pl.tight_layout()
     pl.show()
     
     
@@ -138,11 +137,12 @@ def plot_partido(df, acao, partido_bancada):
     pl.xlabel(f'{acao} per capita', fontsize=14)
     pl.gca().tick_params(axis='x', labelsize=14)
     pl.gca().tick_params(axis='y', labelleft=False)
-    
-    pl.savefig(OUTPUT_PATH / f'atividade/fig/plot_{acao}_partidos_percapita.png', bbox_inches='tight')
-    df_partidos.to_csv(OUTPUT_PATH / f'atividade/data/{acao}_partidos.csv')
+
     
     pl.tight_layout()
+        
+    pl.savefig(OUTPUT_PATH / f'atividade/fig/plot_{acao}_partidos_percapita.png', bbox_inches='tight')
+    df_partidos.to_csv(OUTPUT_PATH / f'atividade/data/{acao}_partidos.csv')
     pl.show()
 
     
