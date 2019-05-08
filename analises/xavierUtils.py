@@ -16,7 +16,7 @@ def Bold(text):
 
 def unique(series):
     """
-    Takes a pandas series as input and print all unique values, separated by comma.
+    Takes a pandas series as input and print all unique values, separated by a blue bar.
     """
     u = series.unique()
     try:
@@ -24,6 +24,11 @@ def unique(series):
     except:
         print Bold(str(len(u)))+': '+'\033[1;34m | \033[0m'.join(sorted(u))
 
+def columns(df):
+    """
+    Print the number of columns and their names, separated by a blue bar.
+    """
+    unique(df.columns)
     
 def mapUnique(df):
     """
@@ -108,4 +113,4 @@ def one2oneViolations(df, colIndex, colMultiples):
     """
     Returns the unique values in colMultiples for a fixed value in colIndex (only for when the number of unique values is >1).
     """
-    return rtest.groupby(colIndex)[colMultiples].unique().loc[rtest.groupby(colIndex)[colMultiples].nunique()>1]
+    return df.groupby(colIndex)[colMultiples].unique().loc[df.groupby(colIndex)[colMultiples].nunique()>1]

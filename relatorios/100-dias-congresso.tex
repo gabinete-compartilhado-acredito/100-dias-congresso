@@ -76,7 +76,7 @@ e do senado\footnote{\footurl{http://www12.senado.leg.br/dados-abertos}}. Além 
 as características históricas do congresso, tanto para fins de comparação quanto de construção de um retrato de suas características
 mais estruturais. Os objetivos deste relatório são dois: de servir de subsídio para a atividade parlamentar do movimento Acredito na
 câmara e no senado, e de prover à sociedade mais informações relativas ao trabalho de seus representantes e das estruturas governamentais
-utilizadas nessa representação.
+utilizadas nessa representação. Este último objetivo atende, na prática, ao valor de transparência do movimento Acredito.
 
 Dado o curto período de tempo disponível para a realização deste estudo, apresentamos aqui uma análise inicial que
 certamente poderá ser desdobrada e aprofundada em investigações futuras. Essa análise foi segmentada em duas frentes,
@@ -85,20 +85,70 @@ de emendas à constituição (PECs) -- em tramitação.
 
 Em relação aos parlamentares, buscamos investigar:
 (\emph{i}) o uso da cota parlamentar (verba destinada a cobrir os custos do trabalho parlamentar);
-(\emph{ii}) o apoio ao governo e a fidelidade partidária;
+(\emph{ii}) o alinhamento ao governo e a fidelidade partidária;
 (\emph{iii}) a distribuição de cargos e poder;
 (\emph{iv}) e o nível de participação e engajamento.
 Em relação às proposições, analisamos quais temas são os mais recorrentes historicamente e na atual legislatura.
 
 
 \subsection{Dados faltantes}
+\label{sec:dados-faltantes}
 
 Um de nossos primeiros achados se refere à limitação das bases de dados, particularmente em relação
-aos dados mais recentes. Por exemplo, os parlamentares tem um prazo de 90 dias para solicitar reembolso
-à cota parlamentar\footnote{\footurl{https://www2.camara.leg.br/comunicacao/assessoria-de-imprensa/cota-parlamentar}}
-e empresas aéreas chegam a demorar mais do que isso para comunicar à câmara a emissão de
-bilhetes, o que torna incompleta a amostra de gastos dos últimos 100 dias. Nesses casos, optamos por apenas
-realizar uma análise histórica.
+aos dados mais recentes, o que impediu a análise completa dos últimos 100 dias. Dados listados
+nas bases como disponíveis e seguindo atualização diária estão, em alguns casos, incompletos.
+Nesses casos, optamos por apenas realizar uma análise histórica. Os casos de dados incompletos
+encontrados são:
+
+\begin{itemize}
+
+\item \emph{Despesas com a cota parlamentar:} os deputados tem um prazo de 90 dias para solicitar reembolso
+  à cota parlamentar\footnote{\footurl{https://www2.camara.leg.br/comunicacao/assessoria-de-imprensa/cota-parlamentar}}
+  e empresas aéreas chegam a demorar mais do que isso para comunicar à câmara a emissão de
+  bilhetes, o que torna incompleta a amostra de gastos dos últimos 100 dias. Esse não é um problema de publicação dos
+  dados, e sim o tempo característico do processo de uso da cota parlamentar, de forma que não poderia ser contornado
+  no futuro.
+
+\item \emph{Participação em órgãos (e.g. comissões):} embora estejam listadas no portal da
+  câmara\footnote{\footurl{https://www2.camara.leg.br/deputados/pesquisa}}, em muitos casos as participações
+  dos atuais deputados em comissões e na mesa diretora não aparecem nas bases de dados abertos. Isso
+  impossibilita a coleta automatizada e rápida dos dados e inviabilizou a análise dessas participações para
+  a legislatura atual. O fato dos dados aparecerem no portal da câmara mostra que esse é um problema de
+  disponibilização que, provavelmente, pode ser resolvido facilmente.
+
+\item \emph{Histórico das lideranças na câmara}: as bases de dados listam as atuais lideranças na câmara
+  de blocos e partidos, mas não guardam o histórico. Embora ainda seja possível realizar uma análise desses 
+  dados nos atuais 100 primeiros dias, não é possível construir um histórico para comparação. Ao menos para
+  o futuro, esse parece um problema de simples resolução, uma vez que bastaria acumular os dados publicados
+  diariamente.
+  
+\end{itemize}
+
+\subsection{Principais achados}
+
+Além da questão dos dados faltantes (Seção \ref{sec:dados-faltantes}), os principais achados
+sobre os 100 primeiros dias do congresso são os seguintes:
+
+\begin{itemize}
+
+\item O alinhamento entre a orientação do governo e os votos na câmara dos deputados é significativo e
+  comparável aos 100 primeiros dias dos governos anteriores (com exceção do segundo mandato de Dilma Rousseff,
+  que destoa pela falta expressiva de apoio). Esse fato constrasta com as publicações em jornais e revistas
+  de opinião que enfatizam a dificuldade do governo em articular com o congresso (veja a Seção \ref{sec:apoio-governo}).
+
+\item Os temas que ganharam destaque nos projetos de lei apresentados na câmara em 2019 são: meio ambiente e desenvolvimento
+  sustentável; direito constitucional; direito penal e processual penal; e defesa e segurança. Os que ganharam
+  destaque no senado são: meio ambiente; direitos humanos e minorias; datas comemorativas; e família, proteção a crianças,
+  adolescentes, mulheres e idosos. Por serem objetos de projetos de lei, concluímos que os atuais parlamentares
+  buscam alterar a legislação relacionada a esses temas. A pauta relacionada a meio ambiente de destaca com força
+  em ambas as casas.
+
+\end{itemize}
+
+
+Algumas informações históricas...
+
+
 
 \HX{Incluir tabela com dados disponíveis e não disponíveis em 2019}
 \HX{Incluit tabela com análises com câmara e senado}
@@ -110,11 +160,12 @@ realizar uma análise histórica.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Análise das votações}
 
-\subsubsection{Apoio ao governo}
+\subsubsection{Alinhamento com o governo}
+\label{sec:apoio-governo}
 
-Podemos estimar o apoio ao governo através da correlação entre os votos dos parlamentares e a orientação de voto
+Podemos estimar o alinhamento dos parlamentares com o governo através da correlação entre os votos dos parlamentares e a orientação de voto
 dada pelo governo. Para fins de comparação, realizamos esse estudo para os 100 primeiros dias da presente legislatura
-e das legislaturas anteriores, desde 1999. Votações nas quais não existia orientação do governo foram ignoradas.
+e das legislaturas anteriores, desde 1999. Votações nas quais não existia orientação do governo foram ignoradas, assim como abstenções e ausências.
 
 A Fig. \ref{fig:apoio-governo-deputados} mostra a distribuição de deputados e deputadas em função do grau de
 alinhamento com a orientação do governo, nos 100 primeiros dias de legislatura, desde 1999 até hoje.
@@ -129,7 +180,7 @@ esse grupo se dilui e o alinhamento dos deputados se torna bastante disperso.
 \caption{Contagem do número de deputados em função da fração de seus votos no plenário que se
   alinham com a orientação do governo. Cada painel apresenta os dados dos 100 primeiros dias de
   cada legislatura, discriminadas pelo presidente no período. A linha vertical tracejada preta
-  separa a metade dos deputados com maior e menor apoio e as linhas coloridas indicam a posição
+  separa a metade dos deputados com maior e menor alinhamento e as linhas coloridas indicam a posição
   dos parlamentares do Acredito.}
 \label{fig:apoio-governo-deputados}
 \end{figure}
@@ -138,12 +189,12 @@ Na maioria das legislaturas, a distribuição bimodal indica uma separação cla
 entre governo e oposição, sendo esta última contrária ao governo em mais de 2/3 das vezes.
 Esse padrão se altera no primeiro mandato de Luiz Inácio Lula da Silva e no segundo mandato de Dilma.
 
-A Fig. \ref{fig:apoio-governo-deputados} ainda indica que o governo de Jair Messias Bolsonaro detém
-razoável apoio dos deputados, com distribuição similar à de governos anteriores. Esse dado contrasta
+A Fig. \ref{fig:apoio-governo-deputados} ainda indica que o governo de Jair Messias Bolsonaro está 
+razoávelmente alinhado aos deputados, com distribuição similar à de governos anteriores. Esse dado contrasta
 com a impressão derivada da cobertura da mídia, conforme mostra as manchetes da Fig. \ref{fig:manchetes-apoio}.
 Uma hipótese para explicar essa aparente discrepância é que as manchetes em geral comentam sobre
 a falta de articulação política no contexto da reforma da previdência, uma votação mais polêmica e
-que exige um apoio maior (por se tratar de uma mudança na constituição). Outras hipóteses seriam
+que exige um alinhamento maior (por se tratar de uma mudança na constituição). Outras hipóteses seriam
 que a agenda de votações não está sendo comandada pelo governo ou que a orientação do governo esteja
 seguindo os votos dos deputados ao invés de liderá-los.
 
@@ -165,12 +216,12 @@ seguindo os votos dos deputados ao invés de liderá-los.
   \tinyurl{http://www.nexojornal.com.br/expresso/2019/04/05/A-desarticula\%C3\%A7\%C3\%A3o-do-governo-no-Congresso.-E-a-tentativa-de-rea\%C3\%A7\%C3\%A3o}\\
   \tinyurl{https://www.revistaforum.com.br/parlamentares-do-psl-ameacam-rebeliao-contra-o-governo-jair-bolsonaro}}
 
-Também analisamos o apoio ao governo por votação. A Fig. \ref{fig:apoio-governo-votacao} mostra o resultado
+Também analisamos o alinhamento ao governo por votação. A Fig. \ref{fig:apoio-governo-votacao} mostra o resultado
 desse levantamento para os 100 primeiros dias das legislaturas desde 1999. Vemos que o segundo mandato
 de Fernando Henrique obteve maioria absoluta (257 votos) em todas as votações dos 100 primeiros dias; já
 o segundo mandato de Dilma é o único que não conseguiu que a média do número de votos por votação
 superasse 257. Foi também nesse governo em que se registrou o maior número de votações em 100 dias.
-O atual governo apresentou características típicas dos governos anteriores, com apoio médio
+O atual governo apresentou características típicas dos governos anteriores, com alinhamento médio
 acima da maioria absoluta e um número mais baixo de votações.
 
 \begin{figure}[H]
@@ -186,13 +237,13 @@ acima da maioria absoluta e um número mais baixo de votações.
 
 O alinhamento com o governo atual também foi estimado por partido. Nesse caso, os
 partidos foram classificados de acordo com a sistematicidade com a qual seguiram
-a orientação dos governos desde 1999. Aqueles que apresentaram uma taxa de apoio
+a orientação dos governos desde 1999. Aqueles que apresentaram uma taxa de alinhamento
 superior a 80\% em todos os governos nos quais possuíam representantes na câmara
 (com exceção do segundo mandato de Dilma, que perdeu apoio de maneira generalizada) foram
 denomidados ``governativos''. Partidos sem presença nas legislaturas anteriores à $55^{\mathrm{\underline{a}}}$ (e.g. PROS),
 foram classificados como ``indefinido''. 
 
-A Fig. \ref{fig:apoio-governo-partido} mostra que o apoio ao governo atravessa múltiplos partidos e que,
+A Fig. \ref{fig:apoio-governo-partido} mostra que o alinhamento com o governo atravessa múltiplos partidos e que,
 dentre aqueles com mais de 80\% de votos, cerca de 40\% foram classificados como governativos. Nessa classificação
 é importante ressalvar que alguns partidos tiveram sua composição e tamanho significativamente alterados ao longo
 do tempo (e.g. PSL), de forma que seu comportamento no passado pode não ter relação com seu
@@ -297,6 +348,42 @@ ausentes.
 Pelo motivo apresentado acima, apenas uma análise histórica da participação em comissões pode ser feita. Por outro lado,
 a base de dados abertos não guarda as informações sobre lideranças passadas dos blocos e partidos, de maneira
 que não é possível realizar uma análise histórica conjunta entre participação em comissões e lideranças.
+
+Um aspecto interessante da Fig. \ref{fig:orgaos-por-ano} é a marcada sazonalidade na ocupação de cargos.
+O número de cargos preenchidos são máximos nos segundos e terceiros anos de cada legislatura. Essa sazonalidade
+também é observada se nos concentrarmos apenas em participação em comissões e na mesa diretora da câmara
+(cargos mais importantes politicamente), conforme mostra a Fig. \ref{fig:cargos-por-ano}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{graficos/cargos_sazonalidade_2019-05-06.pdf}
+\caption{Número de vagas preenchidas por deputados no período de 1 de fevereiro a 18
+  de abril em comissões e mesa diretora (painel superior). Os painéis seguintes mostram os termos aditivos
+  de sua decomposição em tendência, sazonalidade e resíduo.}
+\label{fig:cargos-por-ano}
+\end{figure} 
+
+Também focando nas comissões e mesa diretora, analisamos por quanto tempo as vagas ficam preenchidas por um mesmo
+deputado (veja a Fíg. \ref{fig:tempo-na-vaga}). Existe uma regularidade clara entre as legislaturas, onde a ampla
+maioria dos cargos são preenchidos por até um ano, sendo que um ano é o tempo de permanência mais frequente
+(i.e. moda). Também é possível observar um pequeno segundo pico de tempo de permanência em até 36 dias na maioria
+das legislaturas. Embora não seja possível observar no gráfico, as legislaturas em geral apresentam alguns poucos
+casos nos quais um cargo é ocupado por mais de três anos (chegando a quatro). Esses são cargos de membro da mesa
+diretora e relator de comissão especial. Por fim, a $53^{\mathrm{\underline{a}}}$ legislatura apresenta um pico em cerca
+de 100 dias após o primeiro ano, possivelmente relacionado a algum acontecimento específico.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/vagas_ocupadas_por_tempo_na_vaga_2019-05-06.pdf}
+\caption{Número de vagas ocupadas em comissões e mesa diretora em função do número de dias em que o deputado
+  ocupou a vaga. Cada painel retrata uma legislatura anterior a atual, desde a $52^{\mathrm{\underline{a}}}$,
+  que começou em 2003. As linhas verticais marcam o número de anos de permanência na vaga, sendo que as linhas
+  verticais pretas marcam durações de zero anos (e zero dias) e de 4 anos. As colunas têm largura de 36,5 dias,
+  excluem valores na borda inferior e incluem valores na borda superior.)
+}
+\label{fig:tempo-na-vaga}
+\end{figure} 
+
 
 \HX{Incluir análise histórica da distribuição de cargos}
 
