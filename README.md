@@ -1,8 +1,17 @@
-## Project Title
+## 100 dias do congresso
 
-One Paragraph of project description goes here.
+Uma análise da atividade do congresso nos seus 100 primeiros dias de 2019.
 
-### Project Organization
+### Organização do projeto
+
+#### Estrutura do projeto
+    ├── dados                      <- Parte dos dados utilizados (aqueles que foram baixados)
+    ├── analises                   <- Parte das análises realizadas (feitas em python 2)
+    ├── notebooks                  <- Outra parte das análises realizadas (feitas em python 3)
+    ├── relatorios		   <- Relatório final da análise, em Latex e PDF.
+
+
+#### Padronização proposta posteriormente ao início do projeto
 
     ├── LICENSE
     ├── README.md                  <- The top-level README for developers using this project (also know as this file!)
@@ -14,33 +23,22 @@ One Paragraph of project description goes here.
     ├── scripts                    <- Python files
     ├── requirements.txt           <- Packages used in the code
 
-### Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+### Descrição
 
-#### Prerequisites
+Tomando como base o período de 01/02/2019 a 11/05/2019 e comparando-o com o histórico anterior,
+analisamos a atividade dos parlamentares no congresso brasileiro dentro das seguintes frentes:
+* Apoio ao governo;
+* Fidelidade partidária;
+* Número de relatorias assumidas;
+* Distribuição de outras ações parlamentares no congresso;
+* Uso da cota parlamentar;
+* Temas das proposições apresentadas.
 
-You need to have the packages on `requirements.txt` installed. To do that, open the terminal and run:
+Dado o curto espaço de tempo disponível para a realização do projeto, sua organização e documentação acabou prejudicada.
 
-```
-pip3 install -U -r requirements.txt
-```
+### Contato
 
-#### Changing author
-
-You need change to your name on the files: [LICENSE.md](LICENSE.md), here (below) and optionally put on your code files :)
-
-### Authors
-
-* **You** - *Code maker* - [@you](https://github.com/@you)
-
-### License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-### Acknowledgments
-
-* This README was adapted from [*A template to make good README.md*](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* The structure of this repository was adapted from [*Fast Project Templates*](https://github.com/JoaoCarabetta/project-templates)
-
+Envie questões, comentários e críticas a [hsxavier@gmail.com](https://github.com/hsxavier).
+Relatório e análise realizada por Henrique S. Xavier e João Carabetta.
 
