@@ -22,6 +22,25 @@
 \usepackage{float}                               % Para poder usar figure placement H.
 \usepackage{authblk}
 
+% Cores dos hyperlinks do texto:
+\hypersetup{
+     %colorlinks = blue,
+     linkcolor = DarkRed,
+     %anchorcolor = yellow,
+     %citecolor = cyan,
+     %urlcolor  = magenta
+     }
+
+% Para poder se referir ao título das sub-seções no header:
+\let\Chaptermark\chaptermark
+\def\chaptermark#1{\def\Chaptername{#1}\Chaptermark{#1}}
+\let\Sectionmark\sectionmark
+\def\sectionmark#1{\def\Sectionname{#1}\Sectionmark{#1}}
+\let\Subsectionmark\subsectionmark
+\def\subsectionmark#1{\def\Subsectionname{#1}\Subsectionmark{#1}}
+\let\Subsubsectionmark\subsubsectionmark
+\def\subsubsectionmark#1{\def\Subsubsectionname{#1}\Subsubsectionmark{#1}}
+
 
 %%% Formatting %%%
 % Cores:
@@ -36,9 +55,18 @@
 % Header:
 \pagestyle{fancy}
 \setlength\headheight{26pt} %% just to make warning go away. Adjust the value after looking into the warning.
-\fancyhead[L]{\fontsize{10}{12}\sffamily\secColor\rightmark}
+%\fancyhead[L]{\fontsize{10}{12}\sffamily\secColor\rightmark}
+\fancyhf{}
+\fancyhead[L]{\fontsize{10}{12}\sffamily\secColor\thesubsection. \Subsectionname}
 \rhead{\includegraphics[width=3cm]{acredito_fundobranco.png}}
-% My commands %
+\fancyfoot[C]{\thepage}
+% Para quando não tem sub-seção:
+\fancypagestyle{final}{
+    \fancyhead[L]{\fontsize{10}{12}\sffamily\secColor\rightmark}
+\rhead{\includegraphics[width=3cm]{acredito_fundobranco.png}}
+}
+
+% My commands
 \newcommand{\tinyurl}[1]{{\tiny\url{#1}}}
 \newcommand{\footurl}[1]{{\scriptsize\url{#1}}}
 \newcommand{\HX}[1]{{\centering\color{red}\large<#1>}}
@@ -66,7 +94,15 @@
 \thispagestyle{plain}
 \pagenumbering{arabic}
 
+\setcounter{secnumdepth}{0}
+\section{Agradecimentos}
+
+Agradecemos às seguintes pessoas que nos enviaram
+comentários e sugestões quanto à nossa análise e relatório: Prof. Dr. Robert Bonifácio, professor adjunto de ciência política da Universidade Federal de Goiás (UFG); e Dr. Ana Carla Abrão Costa, da consultoria Oliver Wyman. Dado o tempo exíguo para a preparação deste relatório, diversas sugestões não puderam ser implementadas mas serão incorporadas em futuras análises.  
+
+
 %%%%%%%%%%%%%%%%%%%
+\setcounter{secnumdepth}{3}
 \section{Introdução}
 \label{sec:intro}
 
@@ -81,15 +117,14 @@ utilizadas nessa representação. Este último objetivo atende, na prática, ao 
 Dado o curto período de tempo disponível para a realização deste estudo, apresentamos aqui uma análise inicial que
 certamente poderá ser desdobrada e aprofundada em investigações futuras. Essa análise foi segmentada em duas frentes,
 uma focada nos parlamentares e outra nas proposições -- e.g. projetos de lei (PLs), medidas provisórias (MPs) e propostas
-de emendas à constituição (PECs) -- em tramitação.
+de emenda à constituição (PECs) -- em tramitação.
 
 Em relação aos parlamentares, buscamos investigar:
-(\emph{i}) o uso da cota parlamentar (verba destinada a cobrir os custos do trabalho parlamentar);
-(\emph{ii}) o alinhamento ao governo e a fidelidade partidária;
+(\emph{i}) o alinhamento ao governo e a fidelidade partidária;
+(\emph{ii}) e o nível de participação e engajamento;
 (\emph{iii}) a distribuição de cargos e poder;
-(\emph{iv}) e o nível de participação e engajamento.
+e (\emph{iv}) o uso da cota parlamentar (verba destinada a cobrir os custos do trabalho parlamentar). 
 Em relação às proposições, analisamos quais temas são os mais recorrentes historicamente e na atual legislatura.
-
 
 \subsection{Dados faltantes}
 \label{sec:dados-faltantes}
@@ -106,8 +141,8 @@ encontrados são:
   à cota parlamentar\footnote{\footurl{https://www2.camara.leg.br/comunicacao/assessoria-de-imprensa/cota-parlamentar}}
   e empresas aéreas chegam a demorar mais do que isso para comunicar à câmara a emissão de
   bilhetes, o que torna incompleta a amostra de gastos dos últimos 100 dias. Esse não é um problema de publicação dos
-  dados, e sim o tempo característico do processo de uso da cota parlamentar, de forma que não poderia ser contornado
-  no futuro.
+  dados, e sim o tempo característico do processo de uso da cota parlamentar, de forma que ele não poderia ser contornado
+  no futuro. Também foram identificados registros de dois anos atrás (2017) sendo atualizados neste ano (2019).   
 
 \item \emph{Participação em órgãos (e.g. comissões):} embora estejam listadas no portal da
   câmara\footnote{\footurl{https://www2.camara.leg.br/deputados/pesquisa}}, em muitos casos as participações
@@ -122,6 +157,7 @@ encontrados são:
   o futuro, esse parece um problema de simples resolução, uma vez que bastaria acumular os dados publicados
   diariamente.
   
+\item \emph{Orientação Partidária}: Na Câmara, a orientação partidária em muitos casos é suprimida já que ela vem agregada por blocos partidários. Existem situações que a orientação é apresentada como \textit{'PsbPsdbPodemos...'}, de maneira que não é possível saber quais partidos foram suprimidos. No Senado, não existe orientação partidária.
 \end{itemize}
 
 \subsection{Principais achados}
@@ -131,57 +167,73 @@ sobre os 100 primeiros dias do congresso são os seguintes:
 
 \begin{itemize}
 
-\item O alinhamento entre a orientação do governo e os votos na câmara dos deputados é significativo e
-  comparável aos 100 primeiros dias dos governos anteriores (com exceção do segundo mandato de Dilma Rousseff,
+\item Os alinhamentos entre a orientação do governo e os votos na câmara dos deputados e no senado são significativos e
+  comparáveis aos 100 primeiros dias dos governos anteriores (com exceção do segundo mandato de Dilma Rousseff,
   que destoa pela falta expressiva de apoio). Esse fato constrasta com as publicações em jornais e revistas
-  de opinião que enfatizam a dificuldade do governo em articular com o congresso (veja a Seção \ref{sec:apoio-governo}).
+  de opinião que enfatizam a dificuldade do governo em articular com o congresso (veja a Seção \ref{sec:apoio-governo}, na qual também levantamos hipóteses para explicar essa aparente diferença de cenário).
 
 \item Os temas que ganharam destaque nos projetos de lei apresentados na câmara em 2019 são: meio ambiente e desenvolvimento
-  sustentável; direito constitucional; direito penal e processual penal; e defesa e segurança. Os que ganharam
+  sustentável; direito constitucional; direito penal e processual penal; e defesa e segurança
+  (veja a Seção \ref{sec:temas-camara}). Os que ganharam
   destaque no senado são: meio ambiente; direitos humanos e minorias; datas comemorativas; e família, proteção a crianças,
-  adolescentes, mulheres e idosos. Por serem objetos de projetos de lei, concluímos que os atuais parlamentares
+  adolescentes, mulheres e idosos (Seção \ref{sec:temas-senado}). 
+  Por serem objetos de projetos de lei, concluímos que os atuais parlamentares
   buscam alterar a legislação relacionada a esses temas. A pauta relacionada a meio ambiente de destaca com força
   em ambas as casas.
 
+\item A atuação parlamentar via ações legislativas (e.g. apresentação de projetos de lei, pedidos de
+audiência pública, relatoria de proposições) é altamente concentrada em poucos parlamentares, e diferentes tipos de ação são utilizados pela oposição e situação (Seção \ref{sec:atividade-parlamentar}).
+
 \end{itemize}
 
+\subsection{Análises históricas}
 
-Algumas informações históricas...
+Dentre as investigações puramente históricas, ressaltamos os seguintes resultados como mais relevantes:
+\begin{itemize}
 
+    \item A participação dos deputados em comissões e na mesa diretora segue uma
+    sazonalidade marcada ao longo da legislatura, com maior vigor nos segundos e terceiros anos de mandato e baixa no último. Além disso, as participações em uma
+    dada comissão duram, de maneira geral, um ano (Seção \ref{sec:cargos-deputados}).
 
+    \item No período analisado (de 2009 a 2017), as despesas dos deputados via cota parlamentar seguiram uma regularidade bastante forte, com um nível de gastos médio
+    estável e sazonalidades bem marcadas em períodos de um e quatro anos (veja a Seção \ref{sec:cota-parlamentar}). Também mostramos na mesma seção que os
+    maiores gastos através da cota são com divulgação da atividade parlamentar e passagens aéreas.
+    
+    
+\end{itemize}
 
-\HX{Incluir tabela com dados disponíveis e não disponíveis em 2019}
-\HX{Incluit tabela com análises com câmara e senado}
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Parlamentares}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Análise das votações}
-
-\subsubsection{Alinhamento com o governo}
+\subsection{Alinhamento com o governo}
 \label{sec:apoio-governo}
 
 Podemos estimar o alinhamento dos parlamentares com o governo através da correlação entre os votos dos parlamentares e a orientação de voto
 dada pelo governo. Para fins de comparação, realizamos esse estudo para os 100 primeiros dias da presente legislatura
-e das legislaturas anteriores, desde 1999. Votações nas quais não existia orientação do governo foram ignoradas, assim como abstenções e ausências.
+e das legislaturas anteriores, desde 1999. Votações nas quais não existia orientação do governo foram ignoradas, assim como abstenções e ausências. Obstruções foram contabilizadas como votos contrários. 
+
+No caso do senado, não existe na base de dados o registro da orientação dada pelo governo. Nesse caso, nós utilizamos o voto do líder do governo de cada época como proxy dessa orientação. 
+
+\subsubsection{Câmara}
+\label{sec:apoio-governo-camara}
 
 A Fig. \ref{fig:apoio-governo-deputados} mostra a distribuição de deputados e deputadas em função do grau de
 alinhamento com a orientação do governo, nos 100 primeiros dias de legislatura, desde 1999 até hoje.
 Na maioria dos casos, é possível notar um grupo significativo de deputados que vota 90\% das vezes ou mais em acordo com o governo.
 No caso de 1999 (início do segundo mandato de Fernando Henrique Cardoso), mais da metade dos deputados votaram
 com o governo 100\% das vezes, levando a mediana a esse valor. No início do segundo mandato de Dilma Rousseff,
-esse grupo se dilui e o alinhamento dos deputados se torna bastante disperso.
+esse grupo se diluiu e o alinhamento dos deputados se tornou bastante disperso.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_deputados_2019-04-30.pdf}
+\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_deputados_2019-05-09.pdf}
 \caption{Contagem do número de deputados em função da fração de seus votos no plenário que se
   alinham com a orientação do governo. Cada painel apresenta os dados dos 100 primeiros dias de
-  cada legislatura, discriminadas pelo presidente no período. A linha vertical tracejada preta
-  separa a metade dos deputados com maior e menor alinhamento e as linhas coloridas indicam a posição
-  dos parlamentares do Acredito.}
+  cada legislatura, discriminadas pelo presidente da república no período. A linha vertical tracejada preta
+  separa a metade dos deputados com maior e menor alinhamento.}
 \label{fig:apoio-governo-deputados}
 \end{figure}
 
@@ -195,8 +247,8 @@ com a impressão derivada da cobertura da mídia, conforme mostra as manchetes d
 Uma hipótese para explicar essa aparente discrepância é que as manchetes em geral comentam sobre
 a falta de articulação política no contexto da reforma da previdência, uma votação mais polêmica e
 que exige um alinhamento maior (por se tratar de uma mudança na constituição). Outras hipóteses seriam
-que a agenda de votações não está sendo comandada pelo governo ou que a orientação do governo esteja
-seguindo os votos dos deputados ao invés de liderá-los.
+que a agenda de votações não está sendo comandada pelo governo, que a orientação do governo está seguindo os votos dos deputados ao invés de liderá-los, 
+ou que a natureza das matérias enviadas ao congresso pelo presidente não inclui nada de polêmico ou relevante. Essa última hipótese pode afetar mais presidentes em primeiro mandato.
 
 \begin{figure}[H]
   \centering
@@ -221,12 +273,12 @@ desse levantamento para os 100 primeiros dias das legislaturas desde 1999. Vemos
 de Fernando Henrique obteve maioria absoluta (257 votos) em todas as votações dos 100 primeiros dias; já
 o segundo mandato de Dilma é o único que não conseguiu que a média do número de votos por votação
 superasse 257. Foi também nesse governo em que se registrou o maior número de votações em 100 dias.
-O atual governo apresentou características típicas dos governos anteriores, com alinhamento médio
+O atual governo apresentou características típicas dos governos anteriores (com exceção do segundo mandato de Dilma), com alinhamento médio
 acima da maioria absoluta e um número mais baixo de votações.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_por_votacao_2019-05-03.pdf}
+\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_por_votacao_2019-05-09.pdf}
 \caption{Número de votos seguindo a orientação do governo, em cada votação dos 100 primeiros
   dias de congresso (em vermelho). Cada painel apresenta uma legislatura diferente, que teve
   um número diferente de votações nos 100 primeiros dias. A linha tracejada azul indica a média
@@ -235,92 +287,268 @@ acima da maioria absoluta e um número mais baixo de votações.
 \label{fig:apoio-governo-votacao}
 \end{figure} 
 
-O alinhamento com o governo atual também foi estimado por partido. Nesse caso, os
-partidos foram classificados de acordo com a sistematicidade com a qual seguiram
-a orientação dos governos desde 1999. Aqueles que apresentaram uma taxa de alinhamento
-superior a 80\% em todos os governos nos quais possuíam representantes na câmara
-(com exceção do segundo mandato de Dilma, que perdeu apoio de maneira generalizada) foram
-denomidados ``governativos''. Partidos sem presença nas legislaturas anteriores à $55^{\mathrm{\underline{a}}}$ (e.g. PROS),
-foram classificados como ``indefinido''. 
-
-A Fig. \ref{fig:apoio-governo-partido} mostra que o alinhamento com o governo atravessa múltiplos partidos e que,
-dentre aqueles com mais de 80\% de votos, cerca de 40\% foram classificados como governativos. Nessa classificação
-é importante ressalvar que alguns partidos tiveram sua composição e tamanho significativamente alterados ao longo
-do tempo (e.g. PSL), de forma que seu comportamento no passado pode não ter relação com seu
-comportamento atual. Do conjunto de partidos mais próximos ao governo, talvez seja mais interessante ressaltar aqueles
-não classificados como governativos e que estiveram presentes em legislaturas anteriores: DEM, Cidadania (ex-PPS) e PSDB.
+O alinhamento com o governo atual também foi estimado por partido: a Fig. \ref{fig:apoio-governo-partido} mostra ele atravessa múltiplos partidos, e que o grau de alinhamento com o governo varia de maneira
+mais ou menos suave para a maioria dos partidos. Exceção a esse comportamento se dá com o PT, PSOL e
+PCdoB, que formam uma oposição mais demarcada. A Fig. \ref{fig:apoio-governo-partido-G} apresenta os
+mesmos dados mas apenas para os partidos com 10 deputados ou mais.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_partidos+tamanho_2019-05-03.pdf}
+\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_partidos+tamanho_2019-05-09.pdf}
 \caption{Fração de votos dos deputados que foram alinhados com a orientação do governo atual (painel esquerdo), e
-  número de deputados de acordo com a última filiação, dentro de cada partido. O conjunto de votos dos dois
-  parlamentares do Acredito aparece em verde.}
+  número de deputados de acordo com a última filiação, dentro de cada partido.}
 \label{fig:apoio-governo-partido}
 \end{figure} 
 
-Vemos na Fig. \ref{fig:apoio-governo-partido} que o grau de alinhamento com o governo varia de maneira
-mais ou menos suave para a maioria dos partidos. Exceção a esse comportamento se dá com o PT, PSOL e
-PCdoB, que formam uma oposição mais demarcada. A Fig. \ref{fig:apoio-governo-partido-G} apresenta os
-mesmos dados mas apenas para os partidos com 20 deputados ou mais.
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_partidosG+tamanho_2019-05-03.pdf}
-\caption{Igual à Fig. \ref{fig:apoio-governo-partido}, mas para partidos com 20 deputados ou mais.}
+\includegraphics[width=1.0\textwidth]{graficos/apoio_ao_governo_partidos10+tamanho_2019-05-09.pdf}
+\caption{Igual à Fig. \ref{fig:apoio-governo-partido}, mas para partidos com 10 deputados ou mais.}
 \label{fig:apoio-governo-partido-G}
 \end{figure} 
 
-\subsubsection{Fidelidade partidária}
+\subsubsection{Senado}
+
+A análise do alinhamento dos votos dos senadores com o governo é dificultado pelo fato de que os dados abertos do senado não registram quem é ou foi o líder do governo no senado e nem qual foi a orientação dada. Para contornar esse problema, levantamos as datas de posse e saída de todos os líderes do governo no senado através de notícias, e utilizamos os votos deles como proxy da orientação do governo.
+
+Em comparação com a câmara, vemos no senado, em todos os anos, um maior alinhamento com relação à orientação do governo, o que pode ser causado pelo fato do colegiado ser menor que a câmara, de forma que as matérias que chegam para votação já chegam com mais acordo.
+Aqui também vemos um cenário de alinhamento com o atual governo, com grande parte dos senadores votando mais de 90\% das vezes junto com o líder (veja a Fig. \ref{fig:apoio-governo-senadores}). Também frisamos que só utilizamos votações não-secretas, que contabilizam cerca de 2/3 do total 
+de votações no período, e que o número de votações disponíveis para análise é menor que na câmara: 12 contra 33. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/senado/apoio_ao_governo_senadores_2019-05-09.pdf}
+\caption{Contagem do número de senadores em função da fração de seus votos no plenário que se
+  alinham com a orientação do governo. Cada painel apresenta os dados dos 100 primeiros dias de
+  cada legislatura, discriminadas pelo presidente da república no período. A linha vertical tracejada preta
+  separa a metade dos senadores com maior e menor alinhamento.}
+\label{fig:apoio-governo-senadores}
+\end{figure}
+
+ A Fig. \ref{fig:apoio-governo-senadores} mostra que o atual senado votou tão alinhado com o governo quando o do segundo mandato de Fernando Henrique, talvez até um pouco mais. Assim como na câmara, é possível que nenhum assunto polêmico ou relevante tenha sido posto em pauta até o momento. Novamente, vemos os 100 dias do segundo mandato de Dilma com o menor alinhamento (podemos inclusive perceber indícios de polarização, dado que a distribuição apresenta dois picos).
+
+Ao analisar o número de votos iguais aos do líder do governo, vemos no senado que o atual governo está bastante alinhado com os parlamentares nas 12 votações disponíveis (veja a Fig. \ref{fig:apoio-governo-votacao-senado}). De fato, o número médio de votos alinhados com o governo atual é o maior da série histórica. O segundo mandato de Dilma é, novamente, aquele que exibe o menor alinhamento médio dos 100 primeiros dias analisados. A variação entre as votações também é a maior de todas.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{graficos/senado/apoio_senado_ao_governo_por_votacao_2019-05-08.pdf}
+\caption{Gráfico igual ao da Fig. \ref{fig:apoio-governo-votacao}, mas para o senado.}
+\label{fig:apoio-governo-votacao-senado}
+\end{figure} 
+
+Finalmente, a Fig. \ref{fig:apoio-governo-partido-senado} mostra que o alinhamento dos partidos com o governo atual não é tão diversificado quanto na câmara. Todos os partidos apresentaram o mesmo voto que o líder do governo em ao menos 80\% 
+das vezes. Aqui vale a ressalva de que, além de um número de votações menor, o número de parlamentares em cada partido também é menor do que na câmara, o que leva a maior flutuação estatística. 
+
+A Tabela \ref{tab:apoio} apresenta as médias e medianas dos alinhamentos dos governos com os parlamentares ao longo das legislaturas, tanto para a câmara quanto para o senado.
+
+\begin{table}[]
+    \centering
+    \caption{Para cada 100 primeiros dias de legislatura (identificadas pelo presidente em exercício), 
+    apresentamos a média e mediana do alinhamento dos parlamentares com a orientação do governo, a média e mediana do número de votos alinhados com o governo (por votação), e o número de votações utilizadas na análise. A parte superior se refere à câmara, e a inferior, ao senado.}
+    {\footnotesize
+    \begin{tabular}{lccccc}
+    \hline
+ & \multicolumn{2}{c}{Alinhamento dep.} & \multicolumn{2}{c}{\# votos na câmara}   & \# votações \\
+Governo & Média & Mediana & Média & Mediana & câmara \\
+\hline
+FHC 2 & 79\% & 100\% & 351 & 334 & 26 \\
+Lula 1 & 76\% & 88\% & 306 & 302 & 21 \\
+Lula 2 & 78\% & 96\% & 287 & 292 & 55 \\
+Dilma 1 & 76\% & 92\% & 294 & 286 & 20 \\
+Dilma 2 & 60\% & 64\% & 243 & 240 & 55 \\
+Bolsonaro & 77\% & 95\% & 316 & 307 & 33 \\
+\hline
+& \multicolumn{2}{c}{Alinhamento sen.} & \multicolumn{2}{c}{\# votos no senado} & \# votações \\
+Governo & Média  & Mediana & Média & Mediana & senado \\
+\hline
+FHC 2 & 94\% & 100\% & 53,6 & 53,0 & 19 \\
+Lula 1 & 79\% & 75\% & 51,4 & 57,0 & 8 \\
+Lula 2 & 87\% & 100\% & 49,8 & 54,5 & 8 \\
+Dilma 1 & 74\% & 100\% & 47,0 & 46,0 & 10 \\
+Dilma 2 & 73\% & 67\% & 44,3 & 51,0 & 12 \\
+Bolsonaro & 95\% & 100\% & 61,8 & 63,0 & 12 \\
+\hline
+    \end{tabular}
+    }
+    \label{tab:apoio}
+\end{table}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/senado/apoio_senado_ao_governo_partidos+tamanho_2019-05-09.pdf}
+\caption{Fração de votos dos senadores que foram alinhados com a orientação do governo atual (painel esquerdo), e
+  número de senadores de acordo com a última filiação, dentro de cada partido.}
+\label{fig:apoio-governo-partido-senado}
+\end{figure} 
+
+\subsection{Fidelidade partidária}
 
 Para estimar a fidelidade partidária, verificamos a fração de votos dos deputados que seguem
 a orientação do próprio partido. Novamente, votações nas quais não houve orientação foram
-ignoradas. É importante ressaltar que alguns partidos orientaram poucas vezes e/ou são compostos
-por poucos parlamentares, o que resulta em amostras pequenas e com pouca representatividade estatística.
+ignoradas, assim como abstenções e ausências, e apenas foram consideradas votações nominais. É importante ressaltar que há muitos partidos com dados faltantes e/ou são compostos
+por poucos parlamentares, o que resulta em amostras pequenas e com pouca representatividade estatística. 
 A Tabela \ref{tab:alinha-dep} mostra o número de orientações recebidas por cada deputado.
 
-A Fig. \ref{fig:fid-poder-partido} mostra que, tanto atual quanto historicamente, a maioria dos partidos
+O painel esquerdo da Fig. \ref{fig:fid-poder-partido} mostra que, tanto atual quanto historicamente, a maioria dos partidos
 apresentam alta fidelidade, com mais de 80\% dos votos de seus deputados alinhados à sua orientação.
 Para a maioria dos partidos, também observamos um ligeiro aumento do grau de fidelidade na legislatura atual.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.49\textwidth]{graficos/fidelidade_partidaria_media_2019-05-03.pdf}
-\includegraphics[width=0.49\textwidth]{graficos/poder_partidario_2019-05-03.pdf}
-\caption{O painel esquerdo mostra a fração dos votos dos deputados que seguem orientação do próprio partido, e
-  o painel direito mostra o número médio de votos que seguem a orientação do próprio partido.
+\includegraphics[width=0.49\textwidth]{graficos/fidelidade_partidaria_media_2019-05-08.pdf}
+\includegraphics[width=0.49\textwidth]{graficos/poder_partidario_2019-05-08.pdf}
+\caption{O painel esquerdo mostra a fração dos votos dos deputados que seguem orientação do próprio partido (que serve como indicador de fidelidade partidária). Já 
+  o painel direito mostra o número médio de votos que seguem a orientação do próprio partido (que serve como uma estimativa de poder).
   As barras azuis e largas são para a atual legislatura, e as cinzas e estreitas são para o período
-  histórico de 2011 a 2019.
+  histórico de 1999 a 2019.
 }
 \label{fig:fid-poder-partido}
 \end{figure} 
 
-O painel direito dessa figura apresenta o grau de fidelidade (painel esquerdo) multiplicado pelo tamanho da bancada
+O painel direito dessa mesma figura apresenta o grau de fidelidade multiplicado pelo tamanho da bancada
 (ou tamanho médio, no caso do período histórico), o que dá o número de votos que o partido consegue
-obter dada uma certa orientação. Uma vez que a fidelidade partidária não varia muito entre os partidos,
-aqueles com as maiores bancadas (e.g. PT e PSL em 2019, MDB na série histórica) são também os que podem
-orientar a maior quantidade de votos. Aqui destacamos que partidos outrora numerosos na câmara perderam
+obter dada uma certa orientação. Essa capacidade de orientar um maior ou menor número de votos serve de proxy para o poder do partido. Uma vez que a fidelidade partidária não varia muito entre os partidos,
+aqueles com as maiores bancadas (e.g. PT e PSL em 2019, MDB na série histórica) são também os com maior poder. Aqui destacamos que partidos outrora numerosos na câmara perderam
 muitos assentos na legislatura atual (PT, PSDB, MDB e DEM), enquanto outros partidos, como o PSL e PRB,
 tiveram crescimento significativo. De maneira geral, observamos na atualidade uma distribuição das
 cadeiras entre um número maior de partidos.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1.0\textwidth]{graficos/fidelidade_partidaria_deputados_2019-05-03.pdf}
+\includegraphics[width=1.0\textwidth]{graficos/fidelidade_partidaria_deputados_2019-05-09.pdf}
 \caption{Histogramas da fração de votos dos deputados que são alinhados com o próprio partido, um para
-  cada 100 primeiros dias de legislatura. A linha vertical preta indica a mediana e as linhas
-  coloridas, o alinhamento dos parlamentares do Acredito com seus respectivos partidos.}
+  cada 100 primeiros dias de legislatura.}
 \label{fig:fid-poder-deputado}
 \end{figure} 
 
 Por fim, a Fig. \ref{fig:fid-poder-deputado} mostra a distribuição dos deputados de várias legislaturas
-em termos de fidelidade partidária. De maneira geral, ela é altamente concentrada em altos valores. Vemos
+em termos de fidelidade partidária. De maneira geral, ela é bastante concentrada em altos valores. Vemos
 que a situação atual não difere muito do comportamento histórico e que, nos 100 primeiros dias da legislatura
 anterior (segundo mandato de Dilma), a fidelidade partidária apresentou uma queda. 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Atividade parlamentar}
+\label{sec:atividade-parlamentar}
+
+\subsubsection{Câmara}
+
+Os deputados detém vários instrumentos para influenciar o processo legislativo. Nas várias etapas desse processo, cabem aos deputados e partidos se organizarem para influenciar a tramitação das proposições de interesse através de \textbf{ações legislativas}. Esse levantamento inicial de atividade parlamentar visa quantificar diferentes \textbf{ações legislativas} nos 100 primeiros dias da legislatura número 56.
+
+Uma \textbf{ação legislativa} pode ser definida como a interação institucionalizada de um parlamentar em uma proposição. Por exemplo, o deputado Felipe Rigoni apresentou um Projeto de Lei. Ou mesmo, a deputada Tábata Amaral é relatora de uma Proposta de Emenda a Constituição. Dada essa estrutura e as restrições impostas pelos dados disponíveis, foi possível quantificar as ações apresentadas na Tabela \ref{tab:atividade-parlamentar-acao}.
+
+\begin{table}
+\caption{Tipos de ação parlamentar por quantidade de ações, quantidade de deputados, a mediana de ações dos deputados que tiveram alguma atividade, índice Gini e o acréscimo (ou decréscimo, se negativo) de alinhamento entre deputados que executam a ação e o governo, $A^*$, quando comparado com o alinhamento médio dos deputados. A quatidade de ação parlamentar por tipo pode ser maior que o número de objetos da ação porque um objeto pode ter mais de um deputado envolvido. Por exemplo, mais de um deputado pode propor um Projeto Legislativo.}
+{\footnotesize
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+{} &  \# Ações &  \# Deputados &  Mediana &  Gini & $A^*$\\
+\midrule
+apresentação PDL                  &      242 &          108 &      1.0 &  0.88 &  -38\% \\
+apresentação PEC                  &       12 &           10 &      1.0 &  0.98 &  -3\% \\
+apresentação PL                   &     2154 &          380 &      3.0 &  0.66 &  -1\% \\
+apresentação REQ                  &     3569 &          480 &      5.0 &  0.50 &  -11\% \\
+aprovações de requerimento        &       88 &           27 &      2.0 &  0.97 &   3\% \\
+discussões de matéria             &      639 &          198 &      2.0 &  0.79 &  -11\% \\
+obstruções em plenário            &       15 &            8 &      1.0 &  0.99 &  -21\% \\
+pareceres de relatoria            &      184 &           93 &      1.0 &  0.88 &  -9\% \\
+relatorias                        &     1879 &          398 &      3.0 &  0.59 &  -3\% \\
+requerimento de audiência pública &      744 &          238 &      2.0 &  0.75 &  -18\% \\
+requerimentos de informação       &      472 &          143 &      2.0 &  0.87 &  -27\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+}
+\label{tab:atividade-parlamentar-acao}
+\end{table}
+
+Como cada uma das \textbf{ações legislativas} tem uma função diferente dentro do processo legislativo, a comparação entre elas deve ser feita com cuidado. A primeira coluna da tabela \ref{tab:atividade-parlamentar-acao} é o número de vezes que a ação foi executada nos 100 primeiros dias da legislatura.\footnote{É importante observar que essa quantidade pode ser maior que a quantidade de objetos já que mais de um deputado pode ser o executor da ação.} \textit{Apresentação de Projeto de Lei, Apresentação de Requerimento e Relatorias} são as ações mais executadas e com mais deputados envolvidos. Naturalmente, são as ações com o menor Índice Gini, que mede se as ações estão concentradas em alguns parlamentares. Apesar do Gini das ações serem os mais baixos do grupo, um país considerado desigual tem Gini de 0.6. Portanto, pode-se afirmar que há poucos deputados responsáveis pela maioria das ações.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/camara/atividade/plot_relatorias_deputados.png}
+\caption{O painel esquerdo mostra o histograma de número de relatorias. A linha vertical preta indica a mediana. O painel da direita apresenta o acumulado de relatorias por deputado. A linha horizontal preta representa o valor de 50\% das relatorias. }
+\label{fig:atividade-parlamentar-relatorias-deputados}
+\end{figure} 
+
+As \textit{relatorias}, por exemplo, tem um Gini de 0.61. Em outras palavras, 40\% de todas as relatorias estão nas mãos de 50 deputados, que representam 9.7\% dos parlamentares (Figura \ref{fig:atividade-parlamentar-relatorias-deputados}). Apesar das relatorias serem distribuídas por membros das comissões que são escolhidos proporcionalmente ao tamanho das bancadas partidárias, existem parlamentares que são preferenciais para obter relatorias. Uma hipótese para explicar esse fenômeno é o custo não desprezível de trabalho e baixo apelo popular. A relatoria, diferente de presença no plenário, não é uma ação acompanhada pelo eleitorado. Também, há um custo político de negociar a relatoria além do custo laboral de elaborar um parecer. Portanto, o deputado médio teria pouco incentivo e custo alto para relatar uma matéria. 
+
+Porém, apesar de haver muitas relatorias, poucas já tiveram seus pareceres entregues, somente 184, apenas 9.7\% do total. Esse é um fenômeno que pode explicar a razão para a qual somente poucas proposições estão prontas para a pauta do plenário. Parlamentares, seja por motivos políticos de bloqueio da proposição, seja por inépcia, não entregam os pareceres no prazo estipulado pelo regimento interno da Câmara. Isso afeta o andamento da proposição e, por consequência, a quantidade de proposições prontas para a pauta.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/camara/atividade/PDL.png}
+\caption{O painel esquerdo mostra o número de Propostas de Decreto Legislativo (PDL) que cada partido apresentou nos primeiros 100 dias. O esquerdo mostra o número de PDLs por deputado no partido. }
+\label{fig:atividade-parlamentar-pdl-partidos}
+\end{figure} 
+
+As \textbf{ações legislativas} também podem ser usadas para descrever estratégias que os partidos adotam na prática legislativa. A Figura \ref{fig:atividade-parlamentar-pdl-partidos} mostra que PSOL, PSB e PT têm 85, 54 e 49 apresentações de Projeto de Decreto Legislativo (PDL), que juntos correspondem a 77\% do total. Segundo o Glossário de Termos Legislativos, o PDL visa "regular as matérias de competência exclusiva do Poder Legislativo, sem a sanção do Presidente da República". Esse tipo legislativo é comumente usado para sustar atos do executivo e, como vimos na Figura \ref{fig:atividade-parlamentar-pdl-partidos}, é usado por alguns partidos pouco alinhados com o governo, como mostra a Figura \ref{fig:apoio-governo-partido}. Porém, curiosamente, o PCdoB que é o partido mais desalinhado com o governo, não apresentou PDLs. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/camara/atividade/plot_corr_relatorias_deputados.png}
+\caption{Correlação Pearson das ações parlamentares dos deputados. A escala de correlação varia de -1 a 1. Portanto, o azul claro representa baixa correlação e o vermelho correlação positiva média.}
+\label{fig:atividade-parlamentar-corr}
+\end{figure} 
+
+As estratégias legislativas também podem ser executadas por grupos de parlamentares. A figura \ref{fig:atividade-parlamentar-corr} é uma matriz de correlação de Spearman das atividades dos deputados. Notamos que algumas \textbf{ações legislativas} são mais correlacionadas a outras. Por exemplo, parlamentares que pedem \textit{requerimentos de informação} tendem a fazer \textit{obstruções em plenário} e \textit{apresentar PDLs}, que vamos chamar de comportamento A. Todas essas ações têm consequência direta tanto no andamento das proposições da situação quanto no escrutínio dos atos do governo. Por outro lado, há outro grupo que apresenta \textit{requerimentos de audiência pública}, \textit{discute matérias} e tem \textit{relatorias}, que chamaremos de comportamento B. Esse grupo tem mais poder sobre a pauta da discussão legislativa e andamento das proposições. Tanto as audiências públicas quanto as relatorias são instrumentos para acelerar ou frear o andamento de certas proposições e temas. Além do controle sobre o andamento, a ação de \textit{discussões de matérias} mostra que o grupo tem espaço de fala nas comissões e plenário.
+
+Também podemos entender as \textbf{ações parlamentares} a partir do alinhamento dos deputados que as executaram. Dessa forma, queremos saber se as ações são mais praticadas por deputados alinhados ou não ao governo. Para isso, considere que um grupo de \textbf{ações parlamentares}, $a$, pode ser executada diversas vezes por um deputado $d$. Assim, o número de \textbf{ações parlamentares} executadas por um deputado é $a_d$.  Cada deputado também tem uma taxa de alinhamento com o governo, $g_d \in [0, 1]$. Queremos saber se uma \textbf{ação parlamentar} foi mais executada por quem tem alinhamento ou não. Uma boa maneira de medir isso é simplesmente multiplicando as duas quantidades para cada parlamentar e somando para todos os parlamentares,
+
+\[A(a, g) := \sum_{d=1}^D g_d a_d, \]
+onde $D$ é o número de parlamentares ativos no intervalo de tempo e $A(a,g)$ é o alinhamento das ações com o governo. 
+
+Dessa maneira, se todos os parlamentares estiverem completamente alinhados com o governo, ou seja $g_d = 1$, então $A(a,g) = \sum_{d} a_d$ que é simplesmente o número de ações. Caso contrário, de completo desalinhamento,$g_d = 0$, então  $A(a,g) =0$.  Vemos que $A(a,g) \in [0, \sum_{d\in D} a_d]$, mas para conseguirmos comparar diferentes ações em diferentes intervalos de tempo, vamos normalizar $A(a,g)$. Portanto,
+
+\[A(a, g) := \frac{\sum_{d=1}^D g_d a_d}{\sum_{d=1}^D a_d}, \]
+onde $A(a,g) \in [0,1]$. Usando o alinhamento do deputado $d$ como referência de alinhamento para a ação que ele executa, podemos interpretar  $A(a,g)$ como o alinhamento médio do grupo de ações $a$ em relação ao governo.
+
+\begin{comment}
+Finalmente, se 
+\begin{equation}
+\frac{a_d}{\sum_{d=1}^D a_d} = g_d,
+\end{equation}
+então temos uma situação em que as ações estão distribuídas de acordo com o alinhamento com o governo, i.e., deputados mais alinhados executaram mais ações e deputados menos alinhados executaram menos ações. Essa pode ser considerada uma situação onde há um equilíbrio do uso das ações. Situação tal que pode ser usada como base para entender se uma ação é mais usada por algum espectro do alinhamento. Assim, definimos $A^*(a,g)$ por $A(a,g) - A(g, g)$
+
+\[A^*(a,g) := \frac{1}{\sum_{d\in D} a_d}(\sum_{d\in D} g_d^2 - \sum_{d\in D} g_da_d) \in [-1,1]\]
+\end{comment}
+
+Se um certo grupo de ações $a$ se distribuir igualmente entre todos os parlamentares, 
+independentemente da orientação desses em relação ao governo, ela seria considerada neutra; além disso, ela teria um alinhamento médio igual ao alinhamento médio dos deputados. Por outro lado, se essas ações se concentrassem em parlamentares menos alinhados, elas seriam interpretadas como instrumentos de oposição; além disso, elas teriam alinhamento médio abaixo da média dos deputados. Assim, definimos 
+$A^*(a,g) := A(a,g) - A(1,g)$ como o indicador de quem mais utiliza a ação $a$, 
+onde $A(1,g)$ é o alinhamento médio dos deputados ao governo: $A^*(a,g)<0$ indica que 
+$a$ é utilizada preferencialmente por deputados com alinhamento menor que a média, e $A^*(a,g)>0$ indica que $a$ é utilizada por quem é mais alinhado ao governo.
+
+A figura \ref{fig:atividade-parlamentar-acao-apoio} mostra que as ações \textit{apresentação de PL, relatorias e apresentação de PEC} estão muito próximas de $A(1,g)$. Ou seja, são ações que se distribuem igualmente independente da alinhamento com o governo. A única ação que é executada majoritariamente por membros do governo é a \textit{aprovação de requerimento}. Por outro lado, ações como \textit{apresentação de PDL, requerimento de informação, obstrução em plenário e requerimento de audiência pública} são usadas por deputados com pouco alinhamento com o governo.
+
+Podemos dizer, então, que parlamentares com comportamento A são menos alinhados com o governo, o que era esperado já que essas ações tendem a deixar o andamento legislativo mais lento e questionar as ações do executivo. Os parlamentares com comportamento B estão mais alinhados com o governo que os do A. Porém, tampouco são alinhados ao governo, já que suas ações apresentam $A^* > 0.1$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/camara/atividade/a_estrela.png}
+\caption{Alinhamento dos parlamentares que executaram a ação, $A^*$, na Câmara. A ação \textit{deputado\_numb} representa $A(g,g)$ que deve ter o valor 0.}
+\label{fig:atividade-parlamentar-acao-apoio}
+\end{figure} 
+
+Esta breve exposição da atividade parlamentar na Câmara mostrou que é possível quantificar e discernir o trabalho feito pelos deputados com mais precisão. Com isso os parlamentares podem ser descritos e ordenados para além da apresentação de PL e votação.\footnote{As figuras das outras \textbf{ações parlamentares} estão em anexo.} Também é possível fazer o mesmo para partidos e entender seu comportamento e estratégia. Porém, ainda há muitos pontos de expansão e exploração da atividade parlamentar. Além de comparações históricas sobre o comportamento dos parlamentares, é possível construir modelos mais robustos para a identificação de padrão de comportamentos.
+
+\subsubsection{Senado}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/camara/atividade/plot_relatorias_senado_senadores.png}
+\caption{O painel esquerdo mostra o histograma de número de relatorias no Senado. A linha vertical preta indica a mediana. O painel da direita apresenta o acumulado de relatorias por senador. A linha horizontal preta representa o valor de 50\% das relatorias. }
+\label{fig:atividade-parlamentar-relatoria-senadores}
+\end{figure} 
+
+Da atividade parlamentar do senado, capturamos as relatorias por senador, cuja distribuição é apresentada na Figura \ref{fig:atividade-parlamentar-relatoria-senadores}. Nela observamos também uma concentração de relatorias, porém em menor proporção que na Câmara. 40\% das relatorias estão com 20 senadores, que correspondem a 24.7\% dos senadores. Na Câmara, por outro lado, 40\% das relatorias estão com somente 9.7\% dos senadores. Nos termos do índice Gini que mede a desigualdade na distribuição, vemos que enquanto o da Câmara é 0.61 o do Senado é de 0.36. Uma hipótese para explicar tal diferença é que o Senado é uma casa legislativa menor, com somente 81 parlamentares contra 513 da Câmara, mas sua estrutura não é proporcionalmente menor. O número de comissões e posições na mesa é tal que os senadores tem mais cargos per capita que na Câmara. Dessa maneira, os senadores tem mais influência e poder legislativo proporcional que os deputados. Como a relatoria é uma maneira de exercer influência no processo legislativo, a distribuição é mais equânime.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Distribuição de cargos e poder}
+\label{sec:cargos-deputados}
 
 A proposta desta seção é verificar como os cargos em comissões e lideranças de blocos e partidos,
 de maneira conjunta, são distribuídos entre os deputados. Aqui, infelizmente, temos dificuldades com a base de dados
@@ -384,23 +612,18 @@ de 100 dias após o primeiro ano, possivelmente relacionado a algum aconteciment
 \label{fig:tempo-na-vaga}
 \end{figure} 
 
-
-\HX{Incluir análise histórica da distribuição de cargos}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Atividade parlamentar}
-
-\HX{Incluir seção sobre atividade parlamentar na câmara e no senado}
+%\HX{Incluir análise histórica da distribuição de cargos}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Uso da cota parlamentar}
+\label{sec:cota-parlamentar}
 
 Conforme apresentado na Seção \ref{sec:intro}, as bases de dados relacionadas às despesas parlamentares dos 100 últimos
 dias ainda estão sendo atualizadas. As referentes ao ano de 2018 ganharam, em média, 530 entradas por dia desde o início
 dessa análise, em grande parte relativas à emissão de bilhetes aéreos. Essa incompleteza da base de dados se evidencia
 na Fig. \ref{fig:n-despesas-por-mes}. A queda abrupta, a partir de 2018, no número de despesas registradas é ao menos
 em parte consequência dessa defasagem no registro dos gastos. A Fig. \ref{fig:n-despesas-por-mes} ainda mostra que
-os gastos do total de deputados segue um padrão recorrente ao longo dos anos, com uma queda significativa em janeiro.
+o número de despesas dos deputados segue um padrão recorrente ao longo dos anos, com uma queda significativa em janeiro.
 
 \begin{figure}[H]
 \centering
@@ -458,8 +681,10 @@ cálculo, utilizamos os valores de 2009 a 2017, corrigigos pela inflação.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Proposições}
+\label{sec:proposicoes}
 
 \subsection{Câmara dos deputados}
+\label{sec:temas-camara}
 
 A base de dados abertos da câmara federal indica que, nos 100 primeiros dias da atual legislatura,
 foram apresentados pouco mais de 1600 projetos de lei (PLs, veja a Fig. \ref{fig:prop-2019-tipo}),
@@ -531,7 +756,7 @@ direito constitucional (4,2$\sigma$) e direito processual e penal (2,6$\sigma$).
 temas com baixas mais significativas foram: esporte e lazer (-4,9$\sigma$), cidades e desenvolvimento
 urbano (-3,23$\sigma$) e turismo (-2,3$\sigma$). Hipotetizamos que as altas significativas
 na fração de PLs apresentados indicam que os deputados estão buscando mudar as regras de jogo dentro
-daquele tema em particular ou que aquele tema é prioridade para a membros da legislatura atual.
+daquele tema em particular ou que aquele tema é prioridade para os membros da legislatura atual.
 Baixas significativas podem indicar que as regras de jogo para aquele
 tema são consideradas adequadas ou que o tema em questão não é prioridade para os deputados.
 
@@ -569,10 +794,53 @@ A Fig. \ref{fig:pl-direitos-humanos} mostra que, em 20 anos, esse tema dobrou de
 \end{figure}
 
 \subsection{Senado}
+\label{sec:temas-senado}
+
+No senado, também houve record de apresentação de PLs. Foram apresentados 422 PLs nos 100 primeiros dias da legislatura 56 contra 312 da legisltura 51 que era o último recorde. Um aumento de 35\% do recorde anterior e de 53\% em relacão a legislatura anterior (Figura \ref{fig:pl-total-senado}. Nota-se também um comportamento sazonal na apresentação de proposições, aumento no primeiro ano da legislatura e subsequente diminuição nos próximos anos. Porém, o ano de 2018 foi atípico com um aumento não esperado de apresentações de PL exatamente no último ano da legislatura, no qual se tem usualmente o menor número de PLs novos.
+
+Assim como na Câmara, a Figura \ref{fig:pl-por-tipo-senado} representa o maior número de proposições legislativas. Ignorando os Requerimentos, que são meramente processuais, as PLs vem seguidas da PEC, PRS e PDL.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/senado/PLs-por-ano.pdf}
+\caption{Evolução do número de PLs apresentados no Senado nos 100 dias a partir de 1 de fevereiro, década ano. Os inícios de legislatura são marcados pelas linhas tracejadas cinzas.}
+\label{fig:pl-total-senado}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{graficos/senado/proposicoes-2019-por-tipo.pdf}
+\caption{Número de proposições apresentadas na $56^{\mathrm{\underline{a}}}$ (atual) legislatura.}
+\label{fig:pl-por-tipo-senado}
+\end{figure}
+
+
+
+
+\begin{tabular}{lrr}
+\toprule
+ &   PEC &     PL \\
+ano  &       &        \\
+\midrule
+1988 &   0.0 &   20.0 \\
+1991 &  11.0 &  132.0 \\
+1995 &  32.0 &  150.0 \\
+1999 &  38.0 &  312.0 \\
+2003 &  33.0 &  175.0 \\
+2007 &  39.0 &  249.0 \\
+2011 &  32.0 &  234.0 \\
+2015 &  53.0 &  275.0 \\
+2019 &  41.0 &  422.0 \\
+\bottomrule
+\end{tabular}
+
+
 
 A base de dados abertos do senado também classifica as proposições por temas, apesar dos temas serem
 ligeiramente diferentes. A Fig. \ref{fig:pl-por-tema-senado} é análoga à Fig. \ref{fig:pl-por-tema-camara}, mas trata dos PLs apresentados
 no senado.\footnote{Uma versão simplificada desse gráfico é apresentada na Fig. \ref{fig:pl-por-tema-senado-simples}.}
+
 
 \begin{figure}[H]
 \centering
@@ -601,12 +869,16 @@ históricas e em 2019 são apresentadas na Fig. \ref{fig:pl-por-macrotema-senado
 \label{fig:pl-por-macrotema-senado}
 \end{figure}
 
-\HX{Incluir tabela com dados sobre temas}
+%\HX{Incluir tabela com dados sobre temas}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Tabelas}
+\pagestyle{final}
+\label{sec:tabelas}
+Nesta seção, listamos tabelas que contém as informações apresentadas em alguns gráficos do relatório.
+
 {\footnotesize
-\input{tab-alinhamento-deputados.tex}
+\input{tab-alinhamento-deputados-2.tex}
 }
 
 {\footnotesize
